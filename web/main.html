@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Remind Yourself</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<style>
+    * {
+        margin: 0;
+    }
+
+    html, body {
+        /* 设定body高度为100% 拉到视窗可视的大小 */
+        height: 100%;
+    }
+
+    #id_wrapper {
+        /*设定高度最小为100%, 如果內容区块很多, 可以长大！*/
+        min-height: 100%;
+        position: relative; /*位置relative, 作为footer位置的参考*/
+        /*text-align: center;*/
+    }
+
+    #id_header {
+        height: 40px;
+        line-height: 40px;
+        /*background-color: red;*/
+    }
+
+    #id_content {
+        /* 留出header及footer区块的空间*/
+        padding-top: 40px;
+        padding-bottom: 40px;
+        /*background-color: #2aabd2;*/
+    }
+
+    #id_footer {
+        height: 40px; /*设定footer高度*/
+        position: absolute; /*设定footer绝对位置在底部*/
+        bottom: 0;
+        width: 100%; /*展开footer宽度*/
+        background-color: yellow;
+        line-height: 40px;
+    }
+
+
+
+    .my_table th, .my_table td{
+        text-align: center;
+    }
+
+    .center{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+</style>
+<body>
+<div id="id_wrapper">
+    <div id="id_header">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Brand</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                        <li><a href="#">Link</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">One more separated link</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Link</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Action</a></li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+    </div>
+    <div id="id_content">
+        <div class="center">
+            <table class="table table-bordered table-hover my_table">
+                <!--<caption>待办事项</caption>-->
+                <tr>
+                    <th><input type="checkbox" class="first_th"></th>
+                    <th>条目</th>
+                    <th>创建日期</th>
+                    <th>事件描述</th>
+                    <th>事件状态</th>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>1</td>
+                    <td>2019-5-29 22:14:11</td>
+                    <td>提醒我啊</td>
+                    <td>进行中</td>
+                </tr>
+            </table>
+
+            <button type="button" class="btn btn-primary">创建新条目</button>
+            <button type="button" class="btn btn-danger">删除选中条目</button>
+
+        </div>
+    </div>
+    <footer id="id_footer">
+        Footer Block
+    </footer>
+</div>
+</body>
+</html>
