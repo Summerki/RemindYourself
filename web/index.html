@@ -92,6 +92,11 @@
 
     .header_span_1{
         margin-right: -60px;
+        color: white;
+    }
+
+    a{
+        text-decoration: none;
     }
 
     .header_img_1{
@@ -152,7 +157,7 @@
                     An&nbsp;elegant&nbsp;web&nbsp;reminder&nbsp;tool
                 </div>
                 <div class="col-md-1 col-md-offset-3  header_font_3">
-                    <span class="header_span_1">Sign&nbsp;up</span>
+                    <a href="javascript:void(0);" class="header_span_1_a" id="header_a_span"><span class="header_span_1">Sign&nbsp;up</span></a>
                 </div>
                 <div class="col-md-1 header_img_div_1">
                     <img src="./img/right_arrow.svg" alt="" class="img-responsive header_img_1">
@@ -165,7 +170,7 @@
             <p class="content_p_1">Keep&nbsp;in&nbsp;touch</p>
             <p class="content_p_2">For&nbsp;one&nbsp;thing</p>
             <p class="content_p_3">Just&nbsp;remind&nbsp;you&nbsp;of&nbsp;something</p>
-            <button type="button" class="btn btn-info btn-primary btn-lg">sign&nbsp;in</button>
+            <button type="button" class="btn btn-info btn-primary btn-lg" id="sign_in_btn">sign&nbsp;in</button>
         </div>
 
         <footer id="id_footer">
@@ -173,4 +178,13 @@
         </footer>
     </div>
 </body>
+<script>
+    document.getElementById("sign_in_btn").onclick = function(){
+        open("login.html", "_self");
+    };
+
+    document.getElementById("header_a_span").onclick = function () {
+        open("register.html", "_self");
+    };
+</script>
 </html>
