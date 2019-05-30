@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>登录</title>
+    <title>注册</title>
 </head>
 <style>
     *{
@@ -50,7 +50,7 @@
         -ms-transform: translate(-50%, -50%);
         -o-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
-    }
+     }
 
     .td_left{
         /* border: 1px solid red; */
@@ -68,7 +68,7 @@
         padding-left: 50px;
     }
 
-    #username,#password{
+    #username,#password,#email{
         width: 250px;
         height: 30px;
         border: 1px solid #d0d0d0;
@@ -85,24 +85,28 @@
     }
 </style>
 <body>
-<div class="layout">
-    <div class="center">
-        <form action="#" method="get">
-            <table>
-                <tr>
-                    <td class="td_left"><label for="username">用户名</label></td>
-                    <td class="td_right"><input type="text" name="username" id="username" placeholder="请输入用户名"></td>
-                </tr>
-                <tr>
-                    <td class="td_left"><label for="password">密码</label></td>
-                    <td class="td_right"><input type="password" id="password" name="password" placeholder="请输入密码"></td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center"><input type="submit" value="登录" class="td_submit"></td>
-                </tr>
-            </table>
-        </form>
+    <div class="layout">
+        <div class="center">
+            <form action="#" method="get">
+                <table>
+                    <tr>
+                        <td class="td_left"><label for="username">用户名</label></td>
+                        <td class="td_right"><input type="text" name="username" id="username" placeholder="请输入用户名"></td>
+                    </tr>
+                    <tr>
+                        <td class="td_left"><label for="password">密码</label></td>
+                        <td class="td_right"><input type="password" id="password" name="password" placeholder="请输入密码"></td>
+                    </tr>
+                    <tr>
+                        <td class="td_left"><label for="email">绑定邮箱</label></td>
+                        <td class="td_right"><input type="email" id="email" name="email" placeholder="请输入邮箱地址"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center"><input type="submit" value="注册" class="td_submit"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </div>
-</div>
 </body>
 </html>
