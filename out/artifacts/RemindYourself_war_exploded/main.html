@@ -98,11 +98,11 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="#"></a></li>
-                        <li><a href="#">Link</a></li>
+                        <li><a href="#">Keep&nbsp;in&nbsp;touch</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">欢迎XXX</a></li>
+                        <li><a href="">欢迎<span id="get_user_span_id"></span></a></li>
                         <li><a href="#">注销登录</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
@@ -111,24 +111,40 @@
     </div>
     <div id="id_content">
         <div class="center">
-            <table class="table table-bordered table-hover my_table">
+            <table class="table table-bordered table-hover my_table" id="table">
                 <!--<caption>待办事项</caption>-->
                 <tr>
-                    <th><input type="checkbox" class="first_th"></th>
+                    <th><input type="checkbox" class="first_th" id="first_tr_th" onclick="first_check_event()"></th>
                     <th>条目</th>
                     <th>创建时间</th>
                     <th>提醒时间</th>
                     <th>事件描述</th>
                     <th>事件状态</th>
                 </tr>
-                <tr>
-                    <td><input type="checkbox" ></td>
-                    <td>1</td>
-                    <td>2019-5-29 22:14:11</td>
-                    <td>2019-5-30 22:14:11</td>
-                    <td>提醒我啊</td>
-                    <td>进行中</td>
-                </tr>
+                <!--<tr>-->
+                    <!--<td><input type="checkbox" ></td>-->
+                    <!--<td class="td_id">1</td>-->
+                    <!--<td>2019-5-29 22:14:11</td>-->
+                    <!--<td>2019-5-30 22:14:11</td>-->
+                    <!--<td>提醒我啊</td>-->
+                    <!--<td class="td_state">进行中</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td><input type="checkbox" ></td>-->
+                    <!--<td class="td_id">2</td>-->
+                    <!--<td>2019-5-29 22:14:11</td>-->
+                    <!--<td>2019-5-30 22:14:11</td>-->
+                    <!--<td>提醒我啊</td>-->
+                    <!--<td class="td_state">进行中</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td><input type="checkbox" ></td>-->
+                    <!--<td class="td_id">3</td>-->
+                    <!--<td>2019-5-29 22:14:11</td>-->
+                    <!--<td>2019-5-30 22:14:11</td>-->
+                    <!--<td>提醒我啊</td>-->
+                    <!--<td class="td_state">进行中</td>-->
+                <!--</tr>-->
             </table>
 
             <br>
@@ -145,7 +161,7 @@
                         <label for="time_input" class="col-sm-2 control-label">新的提醒日期</label>
                         <div class="col-sm-10">
                             <div class="input-append date" id="time_input">
-                                <input class="form-control form_datetime" size="16" type="text" value="" readonly >
+                                <input class="form-control form_datetime" size="16" type="text" value="" readonly id="new_notify_time">
                                 <!--<span class="add-on"><i class="icon-th"></i></span>-->
                             </div>
                         </div>
@@ -155,9 +171,9 @@
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary">创建新条目</button>
-                            <button type="button" class="btn btn-success">标记为已完成</button>
-                            <button type="button" class="btn btn-danger">删除选中条目</button>
+                            <button type="button" class="btn btn-primary" id="create_btn" onclick="add_to_table()">创建新条目</button>
+                            <button type="button" class="btn btn-success" id="marked_btn" onclick="marked_complete_event()">标记为已完成</button>
+                            <button type="button" class="btn btn-danger" id="delete_btn" onclick="delete_select_item_event()">删除选中条目</button>
                         </div>
                     </div>
                 </form>
@@ -176,6 +192,7 @@
 <!---->
 <script type="text/javascript" src="./js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 <script type="text/javascript" src="./js/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+<script type="text/javascript" src="./js/date.format.js" charset="UTF-8"></script>
 <script type="text/javascript">
     $(".form_datetime").datetimepicker({
         format: "yyyy-mm-dd hh:ii",
@@ -186,12 +203,191 @@
 
 
     // checkbox的全选全不选功能完成
-    checkbos_arr = $("input[type='checkbox']");
-    var first_check = $(".first_th");
-    first_check.onclick = function () {
-        for (var i = 0; i < checkbos_arr.length; i++){
-            checkbos_arr[i].checked= first_check.checked;
+    function first_check_event() {
+        var first_check = document.getElementById("first_tr_th");
+        alert("进来了");
+        checkbox_arr = $("input[type='checkbox']");
+        alert(checkbox_arr.length);
+        for (var i = 0; i < checkbox_arr.length; i++){
+            checkbox_arr[i].checked= first_check.checked;
         }
+    };
+
+
+    function add_to_table() {
+        // 点击 创建新条目 事件
+        var new_notify = document.getElementById("new_notify").value;
+        alert(new_notify);
+
+        var new_notify_time = document.getElementById("new_notify_time").value;
+        alert(new_notify_time);
+        // 获得现在的时间
+        var now_time = (new Date()).getTime();
+        var now_time_format = new Date(now_time).format("Y-d-m H:i");
+        alert(now_time_format);
+        var table = document.getElementById("table");
+        // 获取原本最后一个checkbox的id值
+        var td_arr = document.getElementsByClassName("td_id");
+        alert(td_arr[td_arr.length - 1].innerHTML);
+        var new_td_id = (+td_arr[td_arr.length - 1].innerHTML + 1) + "";
+
+        table.innerHTML += "<tr>\n" +
+                                "<td><input type=\"checkbox\" ></td>\n" +
+                                "<td class=\"td_id\">" + new_td_id + "</td>\n" +
+                                "<td class=\"td_now_time\">" + now_time_format + "</td>\n" +
+                                "<td class=\"td_new_notify_time\">" + new_notify_time + "</td>\n" +
+                                "<td class=\"td_new_notify\">" + new_notify + "</td>\n" +
+                                "<td class=\"td_state\">进行中</td>\n" +
+                            "</tr>";
+    };
+
+
+    // 按钮 标记为已完成 事件
+    function marked_complete_event() {
+        var td_input_arr = $("td > input");  // 获取所有td下所有input集合
+        var td_state_arr = document.getElementsByClassName("td_state");  // 获取所有td中表示状态的集合（也就是每一个tr下的最后一个td）
+        alert(td_input_arr.length);
+        alert(td_state_arr.length);
+        var count = 0;
+        for (var i = 0; i < td_input_arr.length; i++){
+            if (td_input_arr[i].checked){  // 被选中的
+                count++;
+                td_state_arr[i].innerHTML = "已完成";
+            }
+        };
+        alert(count);
+    };
+    
+    
+    // 按钮 删除选中条目 事件
+    // 更新删除操作
+    // 1. 本地删除
+    // 2. ajax数据库删除
+    function delete_select_item_event() {
+        var td_input_arr = $("td > input");  // 获取所有td下的Input集合
+
+        //--------------
+        var tr_delete_arr = [];  // 准备获取要删除的每一列的集合
+        var td_id_arr = document.getElementsByClassName("td_id");
+        var td_now_time_arr = document.getElementsByClassName("td_now_time");
+        var td_new_notify_time_arr = document.getElementsByClassName("td_new_notify_time");
+        var td_new_notify_arr = document.getElementsByClassName("td_new_notify");
+        var td_state_arr = document.getElementsByClassName("td_state");
+        //-------------
+
+
+        //------------
+        for (var i = 0; i < td_input_arr.length; i++){
+            if (td_input_arr[i].checked){  // 被选中了
+                //--------------------
+                // var td_id_del = td_id_arr[i].innerHTML;
+                var td_now_time_del = td_now_time_arr[i].innerHTML;
+                var td_new_notify_time_del = td_new_notify_time_arr[i].innerHTML;
+                var td_new_notify_del = td_new_notify_arr[i].innerHTML;
+                var td_state_del = td_state_arr[i].innerHTML;
+                if (td_state_del == "进行中"){
+                    td_state_del = "0";
+                }else {
+                    td_state_del = "1";
+                }
+                alert(td_now_time_del + "--" + td_new_notify_time_del + "--" + td_new_notify_del + "--" + td_state_del);
+                // 构建json字符串
+                var td_del_json = {"establish_time":td_now_time_del, "remind_time":td_new_notify_time_del, "content":td_new_notify_del, "state":td_state_del};
+                tr_delete_arr.push(td_del_json);
+                alert(tr_delete_arr);
+                //--------------------
+
+            }
+        }
+        var json_send_obj = JSON.stringify(tr_delete_arr);
+        //----------------
+
+        for (var i = 0; i < td_input_arr.length; i++){
+            if (td_input_arr[i].checked){
+                var td_select_parent_tr = td_input_arr[i].parentNode.parentNode;
+                var td_select_parent_table = td_input_arr[i].parentNode.parentNode.parentNode;
+                td_select_parent_table.removeChild(td_select_parent_tr);
+            }
+        }
+
+        // 删除完成之后还有一个操作，将id[条目]重新排序
+        var td_id_arr = document.getElementsByClassName("td_id");
+        for (var i = 0; i < td_id_arr.length; i++){
+            td_id_arr[i].innerHTML = i + 1;
+        }
+
+        // 异步请求，将要删除的行的信息放在td_del_json传给服务器
+        $.ajax({
+            url:"/remindYourself/deleteServlet",
+            type:"post",
+            data:{"deleteJson":json_send_obj, "username":"xiaohu"},
+            dataType:"json",
+            success:function (recvJsonData) {
+
+            },
+            error:function (recvJsonData) {
+
+            }
+        });
+    };
+
+
+
+    // 页面加载完成就开始的异步请求操作
+    // 1. 获取右上角欢迎 XXX 的具体名字
+    // 2. 从数据库中加载 提醒事项
+    window.onload = function () {
+        // 定义json的数据格式
+        // {"user":User对象, "event":[{Event对象},{Event对象},...]}
+        $.ajax({
+            url:"/remindYourself/mainServlet",
+            type:"post",
+            success:function (jsonData) {
+                // 1. 显示欢迎 XXX 具体是谁
+                var user = eval(jsonData.user);
+                document.getElementById("get_user_span_id").innerHTML = user.username;
+
+                // 2. 将表格填充数据库的数据
+                var table = document.getElementById("table");
+                var event_arr = eval(jsonData.event);
+                alert(event_arr);
+                if (event_arr.length != 0){
+                    for (var i = 0; i < event_arr.length; i++){
+                        var new_notify = event_arr[i].content;
+                        var new_notify_time = event_arr[i].remindTime;
+                        var now_time = event_arr[i].establishTime;
+                        var new_td_id = event_arr[i].id;
+                        var td_state = event_arr[i].state;
+                        alert(new_notify + "--" + new_notify_time + "--" + now_time + "--" + new_td_id + "--" + td_state);
+                        if (td_state == "0"){
+                            table.innerHTML += "<tr>\n" +
+                                "<td><input type=\"checkbox\" ></td>\n" +
+                                "<td class=\"td_id\">" + new_td_id + "</td>\n" +
+                                "<td class=\"td_now_time\">" + now_time + "</td>\n" +
+                                "<td class=\"td_new_notify_time\">" + new_notify_time + "</td>\n" +
+                                "<td class=\"td_new_notify\">" + new_notify + "</td>\n" +
+                                "<td class=\"td_state\">进行中</td>\n" +
+                                "</tr>";
+                        } else {
+                            table.innerHTML += "<tr>\n" +
+                                "<td><input type=\"checkbox\" ></td>\n" +
+                                "<td class=\"td_id\">" + new_td_id + "</td>\n" +
+                                "<td class=\"td_now_time\">" + now_time + "</td>\n" +
+                                "<td class=\"td_new_notify_time\">" + new_notify_time + "</td>\n" +
+                                "<td class=\"td_new_notify\">" + new_notify + "</td>\n" +
+                                "<td class=\"td_state\">已完成</td>\n" +
+                                "</tr>";
+                        }
+                    }
+                }
+
+
+            },
+            error:function () {
+                alert("系统异常");
+            },
+            dataType:"json"
+        });
     };
 
 

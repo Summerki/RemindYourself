@@ -90,7 +90,7 @@
 <body>
 <div class="layout">
     <div class="center">
-        <form action="/remindYourself/loginServlet" method="get">
+        <form action="/remindYourself/loginServlet" method="post">
             <table>
                 <tr>
                     <td class="td_left"><label for="username">用户名</label></td>
@@ -106,6 +106,9 @@
             </table>
         </form>
     </div>
+    <div class="layout_right">
+        <!--这里写 前往注册/忘记密码 的html-->
+    </div>
 </div>
 </body>
 <script type="text/javascript">
@@ -113,15 +116,24 @@
     function ajax_request(username, password) {
         $.ajax({
             url:"loginServlet",
-            type:"GET",
+            type:"post",
             // data:{"username":username, "password":password},
             // data:"username="+username+"&password="+password,  // 拼接这个太麻烦了
             data:{"username":username, "password":password},
             success:function (data) {
                 // js需要通过eval()函数将返回值转为一个js能识别的json对象
-                alert(data);
-                if (data.result == "success"){
+                // alert(data);
+                // if (data.result == "success"){
+                //     alert("登陆成功");
+                //     open("main.html", "_self");
+                // } else {
+                //     alert("用户名或密码错误");
+                //     open("login.html", "_self");
+                // }
+                var user = eval(data.user);
+                if (user != null){
                     alert("登陆成功");
+                    alert(user.password);
                     open("main.html", "_self");
                 } else {
                     alert("用户名或密码错误");

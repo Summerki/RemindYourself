@@ -1,15 +1,17 @@
 package com.suki.remindyourself.web.Servlet;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.suki.remindyourself.dao.UserDao;
 import com.suki.remindyourself.domain.User;
-import net.sf.json.JSONObject;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 ;
 
@@ -33,13 +35,18 @@ public class LoginServlet extends HttpServlet {
         // 调用UserDao的方法
         UserDao userDao = new UserDao();
         User u = userDao.checkLogin(loginUser);
-        JSONObject json = new JSONObject();
+
+        // 如果返回的u不为null，将其存到session之中为其他请求使用
+        HttpSession session = req.getSession();
         if (u != null){
-            json.put("result", "success");
-        }else {
-            json.put("result", "fail");
+            session.setAttribute("user", u);
         }
+
+        JSONObject json = new JSONObject();
+        json.put("user", u);
         resp.getWriter().print(json);
+
+
 
 
 

@@ -1,13 +1,12 @@
 package com.suki.remindyourself.domain;
 
-import java.util.Date;
 
 // 实体类：事件
 public class Event {
 
     private int id;
-    private Date establishTime;
-    private Date remindTime;
+    private String establishTime;
+    private String remindTime;
     private String content;
     private int state;
     private int forUserId;
@@ -24,6 +23,22 @@ public class Event {
                 '}';
     }
 
+    public String getEstablishTime() {
+        return establishTime;
+    }
+
+    public String getRemindTime() {
+        return remindTime;
+    }
+
+    public void setEstablishTime(String establishTime) {
+        this.establishTime = establishTime;
+    }
+
+    public void setRemindTime(String remindTime) {
+        this.remindTime = remindTime;
+    }
+
     public int getId() {
         return id;
     }
@@ -32,21 +47,6 @@ public class Event {
         this.id = id;
     }
 
-    public Date getEstablishTime() {
-        return establishTime;
-    }
-
-    public void setEstablishTime(Date establishTime) {
-        this.establishTime = establishTime;
-    }
-
-    public Date getRemindTime() {
-        return remindTime;
-    }
-
-    public void setRemindTime(Date remindTime) {
-        this.remindTime = remindTime;
-    }
 
     public String getContent() {
         return content;

@@ -1,11 +1,18 @@
 package com.suki.remindyourself.utils;
 
+import com.suki.remindyourself.domain.Event;
 import com.suki.remindyourself.domain.PropertiesDomain;
 import com.suki.remindyourself.domain.User;
+import sun.plugin2.message.EventMessage;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.EventListener;
 import java.util.Properties;
 
 // 工具类：操作JDBC
@@ -73,12 +80,38 @@ public class JDBCUtils {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("UserDao类出现异常");
+            System.out.println("UserDao类的selectFromMySql方法出现异常");
         }
         return null;  // 代表没有找到结果则返回null
     }
 
 
+    static Event event;
+    static ArrayList<Event> eventList;
+    // 根据指定sql语句找到符合条件的event表中的行
+    public static ArrayList<Event> selectEventFromMySql(String sql){
+        JDBCUtils.getJDBCConnection(JDBCUtils.readProperties());  // 获得Mysql连接
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            eventList = new ArrayList<>();
+            while (rs.next()){
+                event = new Event();
+                event.setId(rs.getInt(1));
+                event.setEstablishTime(rs.getString(2));
+                event.setRemindTime(rs.getString(3));
+                event.setContent(rs.getString(4));
+                event.setState(rs.getInt(5));
+                event.setForUserId(rs.getInt(6));
+                eventList.add(event);
+            }
+            return eventList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("UserDao类的selectEventFromMySql方法出现异常");
+            return null;  // 没有找到对应的event事件则返回null
+        }
+    }
 
 
     // just for test
