@@ -12,7 +12,7 @@
 
 
     <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
     <script src="js/bootstrap.min.js"></script>
 
@@ -122,7 +122,7 @@
                     <th>事件状态</th>
                 </tr>
                 <tr>
-                    <td><input type="checkbox"></td>
+                    <td><input type="checkbox" ></td>
                     <td>1</td>
                     <td>2019-5-29 22:14:11</td>
                     <td>2019-5-30 22:14:11</td>
@@ -181,7 +181,20 @@
         format: "yyyy-mm-dd hh:ii",
         autoclose: true,
         todayBtn: true,
-        pickerPosition: "bottom-left"
+        pickerPosition: "bottom-right"
     });
+
+
+    // checkbox的全选全不选功能完成
+    checkbos_arr = $("input[type='checkbox']");
+    var first_check = $(".first_th");
+    first_check.onclick = function () {
+        for (var i = 0; i < checkbos_arr.length; i++){
+            checkbos_arr[i].checked= first_check.checked;
+        }
+    };
+
+
+
 </script>
 </html>

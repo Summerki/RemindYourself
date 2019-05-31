@@ -1,9 +1,9 @@
 package com.suki.remindyourself.web.Servlet;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.suki.remindyourself.dao.UserDao;
 import com.suki.remindyourself.domain.User;
-import com.sun.javafx.collections.MappingChange;
+import net.sf.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,15 +11,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+;
 
 @WebServlet("/loginServlet")
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // 设置req编码
+        // 设置编码
         req.setCharacterEncoding("utf-8");
+        resp.setContentType("text/html;charset=utf-8");
         // 获取请求参数
         String username = req.getParameter("username");
         String password = req.getParameter("password");
@@ -33,20 +33,15 @@ public class LoginServlet extends HttpServlet {
         // 调用UserDao的方法
         UserDao userDao = new UserDao();
         User u = userDao.checkLogin(loginUser);
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, String> map = new HashMap<>();
+        JSONObject json = new JSONObject();
         if (u != null){
-            // 返回一个json对象
-            map.put("result", "success");
-        }else{
-            map.put("result", "fail");
+            json.put("result", "success");
+        }else {
+            json.put("result", "fail");
         }
-        // 转为json数据
-        String json = mapper.writeValueAsString(map);
-        System.out.println(json);
+        resp.getWriter().print(json);
 
-        // 设置response编码方式
-        resp.setContentType("application/json;charset=utf-8");
+
 
 
     }

@@ -12,7 +12,7 @@
 
 
     <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
     <script src="js/bootstrap.min.js"></script>
 
@@ -111,10 +111,10 @@
     </div>
     <div id="id_content">
         <div class="center">
-            <table class="table table-bordered table-hover my_table">
+            <table class="table table-bordered table-hover my_table" id="table">
                 <!--<caption>待办事项</caption>-->
                 <tr>
-                    <th><input type="checkbox" class="first_th"></th>
+                    <th><input type="checkbox" class="first_th" id="first_tr_th" onclick="first_check_event()"></th>
                     <th>条目</th>
                     <th>创建时间</th>
                     <th>提醒时间</th>
@@ -122,12 +122,28 @@
                     <th>事件状态</th>
                 </tr>
                 <tr>
-                    <td><input type="checkbox"></td>
-                    <td>1</td>
+                    <td><input type="checkbox" ></td>
+                    <td class="td_id">1</td>
                     <td>2019-5-29 22:14:11</td>
                     <td>2019-5-30 22:14:11</td>
                     <td>提醒我啊</td>
-                    <td>进行中</td>
+                    <td class="td_state">进行中</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" ></td>
+                    <td class="td_id">2</td>
+                    <td>2019-5-29 22:14:11</td>
+                    <td>2019-5-30 22:14:11</td>
+                    <td>提醒我啊</td>
+                    <td class="td_state">进行中</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" ></td>
+                    <td class="td_id">3</td>
+                    <td>2019-5-29 22:14:11</td>
+                    <td>2019-5-30 22:14:11</td>
+                    <td>提醒我啊</td>
+                    <td class="td_state">进行中</td>
                 </tr>
             </table>
 
@@ -145,7 +161,7 @@
                         <label for="time_input" class="col-sm-2 control-label">新的提醒日期</label>
                         <div class="col-sm-10">
                             <div class="input-append date" id="time_input">
-                                <input class="form-control form_datetime" size="16" type="text" value="" readonly >
+                                <input class="form-control form_datetime" size="16" type="text" value="" readonly id="new_notify_time">
                                 <!--<span class="add-on"><i class="icon-th"></i></span>-->
                             </div>
                         </div>
@@ -155,9 +171,9 @@
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-primary">创建新条目</button>
-                            <button type="button" class="btn btn-success">标记为已完成</button>
-                            <button type="button" class="btn btn-danger">删除选中条目</button>
+                            <button type="button" class="btn btn-primary" id="create_btn" onclick="add_to_table()">创建新条目</button>
+                            <button type="button" class="btn btn-success" id="marked_btn" onclick="marked_complete_event()">标记为已完成</button>
+                            <button type="button" class="btn btn-danger" id="delete_btn" onclick="delete_select_item_event()">删除选中条目</button>
                         </div>
                     </div>
                 </form>
@@ -176,12 +192,89 @@
 <!---->
 <script type="text/javascript" src="./js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 <script type="text/javascript" src="./js/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+<script type="text/javascript" src="./js/date.format.js" charset="UTF-8"></script>
 <script type="text/javascript">
     $(".form_datetime").datetimepicker({
         format: "yyyy-mm-dd hh:ii",
         autoclose: true,
         todayBtn: true,
-        pickerPosition: "bottom-left"
+        pickerPosition: "bottom-right"
     });
+
+
+    // checkbox的全选全不选功能完成
+    function first_check_event() {
+        var first_check = document.getElementById("first_tr_th");
+        alert("进来了");
+        checkbox_arr = $("input[type='checkbox']");
+        alert(checkbox_arr.length);
+        for (var i = 0; i < checkbox_arr.length; i++){
+            checkbox_arr[i].checked= first_check.checked;
+        }
+    };
+
+
+    function add_to_table() {
+        // 点击 创建新条目 事件
+        var new_notify = document.getElementById("new_notify").value;
+        alert(new_notify);
+
+        var new_notify_time = document.getElementById("new_notify_time").value;
+        alert(new_notify_time);
+        // 获得现在的时间
+        var now_time = (new Date()).getTime();
+        var now_time_format = new Date(now_time).format("Y-d-m H:i");
+        alert(now_time_format);
+        var table = document.getElementById("table");
+        // 获取原本最后一个checkbox的id值
+        var td_arr = document.getElementsByClassName("td_id");
+        alert(td_arr[td_arr.length - 1].innerHTML);
+        var new_td_id = (+td_arr[td_arr.length - 1].innerHTML + 1) + "";
+
+        table.innerHTML += "<tr>\n" +
+                                "<td><input type=\"checkbox\" ></td>\n" +
+                                "<td class=\"td_id\">" + new_td_id + "</td>\n" +
+                                "<td>" + now_time_format + "</td>\n" +
+                                "<td>" + new_notify_time + "</td>\n" +
+                                "<td>" + new_notify + "</td>\n" +
+                                "<td class=\"td_state\">进行中</td>\n" +
+                            "</tr>";
+    };
+
+
+    // 按钮 标记为已完成 事件
+    function marked_complete_event() {
+        var td_input_arr = $("td > input");  // 获取所有td下所有input集合
+        var td_state_arr = document.getElementsByClassName("td_state");  // 获取所有td中表示状态的集合（也就是每一个tr下的最后一个td）
+        alert(td_input_arr.length);
+        alert(td_state_arr.length);
+        var count = 0;
+        for (var i = 0; i < td_input_arr.length; i++){
+            if (td_input_arr[i].checked){  // 被选中的
+                count++;
+                td_state_arr[i].innerHTML = "已完成";
+            }
+        };
+        alert(count);
+    }
+    
+    
+    // 按钮 删除选中条目 事件
+    function delete_select_item_event() {
+        var td_input_arr = $("td > input");  // 获取所有td下的Input集合
+        for (var i = 0; i < td_input_arr.length; i++){
+            if (td_input_arr[i].checked){  // 被选中了
+                var td_select_parent_tr = td_input_arr[i].parentNode.parentNode;
+                var td_select_parent_table = td_input_arr[i].parentNode.parentNode.parentNode;
+                td_select_parent_table.removeChild(td_select_parent_tr);
+            }
+        }
+        // 删除完成之后还有一个操作，将id[条目]重新排序
+        var td_id_arr = document.getElementsByClassName("td_id");
+        for (var i = 0; i < td_id_arr.length; i++){
+            td_id_arr[i].innerHTML = i + 1;
+        }
+    }
+
 </script>
 </html>
