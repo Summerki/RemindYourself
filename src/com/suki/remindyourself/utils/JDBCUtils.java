@@ -1,11 +1,14 @@
 package com.suki.remindyourself.utils;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.suki.remindyourself.domain.Event;
 import com.suki.remindyourself.domain.PropertiesDomain;
 import com.suki.remindyourself.domain.User;
 import sun.plugin2.message.EventMessage;
 
+import javax.xml.transform.sax.SAXTransformerFactory;
+import java.awt.geom.FlatteningPathIterator;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -169,6 +172,46 @@ public class JDBCUtils {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("JDBCUtils类的insertFromEventTable方法出现了异常");
+        }
+
+    }
+
+
+    // 用户注册时操作数据库
+    public static boolean register(String sql){
+        JDBCUtils.getJDBCConnection(JDBCUtils.readProperties());  // 获得Mysql连接
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (!rs.next()){  // 未查到结果
+                return false;  // 返回false代表未查到结果
+            } else {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("JDBCUtils类的register方法出现异常");
+            return true;  // 我认为系统出现异常应当先阻止用户注册，所以这里返回true
+        }
+    }
+
+    // 用于注册成功后将该用户信息插入到数据库之中
+    public static void registerInsert(JSONObject jsonObject, String sql){
+        String username = (String) jsonObject.get("username");
+        String password = (String) jsonObject.get("password");
+        String email = (String) jsonObject.get("email");
+
+        JDBCUtils.getJDBCConnection(JDBCUtils.readProperties());  // 获得Mysql连接
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setObject(1, username);
+            ps.setObject(2, password);
+            ps.setObject(3, email);
+            int registerInsertCount = ps.executeUpdate();
+            System.out.println("执行用户注册完成之后返回插入行数-->" + registerInsertCount);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("JDBCUtils类的registerInsert方法出现异常");
         }
 
     }

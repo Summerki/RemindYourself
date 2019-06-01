@@ -96,4 +96,36 @@ public class UserDao {
         JDBCUtils.insertFromEventTable(sql, u, jsonObject);
     }
 
+
+    /**
+     * 检查注册时传来的用户的用户名和邮箱是否存在于数据库
+     * @param registerJson
+     * @param str str="username"则检查username;  str="email"则检查email
+     * @return 若str="username"则返回该用户名是否存在于数据库之中， 同理str="email"
+     */
+    public boolean checkRegisterUser(JSONObject registerJson, String str){
+        if (str.equals("username")){
+            String username = (String) registerJson.get("username");
+            String sql = "select * from user where username = '" + username + "'";
+            return JDBCUtils.register(sql);
+        } else if (str.equals("email")){
+            String email = (String) registerJson.get("email");
+            String sql = "select * from user where email = '" + email + "'";
+            return JDBCUtils.register(sql);
+        } else {  // 这里可以为以后做扩充
+            return true;
+        }
+    }
+
+
+    /**
+     * 这是在检查过用户名username和邮箱email没有出现在数据库之后才会执行的函数
+     * 主要是把这个新注册的用户的信息存进数据库，也就是进行一个insert操作
+     * @param jsonObject
+     */
+    public void registerInsert(JSONObject jsonObject){
+        String sql = "insert into user (username, password, email) values(?, ?, ?)";
+        JDBCUtils.registerInsert(jsonObject, sql);
+    }
+
 }

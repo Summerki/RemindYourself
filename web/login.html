@@ -90,7 +90,7 @@
 <body>
 <div class="layout">
     <div class="center">
-        <form action="/remindYourself/loginServlet" method="post">
+        <form action="#" method="post">
             <table>
                 <tr>
                     <td class="td_left"><label for="username">用户名</label></td>
@@ -115,7 +115,7 @@
 
     function ajax_request(username, password) {
         $.ajax({
-            url:"loginServlet",
+            url:"/remindYourself/loginServlet",
             type:"post",
             // data:{"username":username, "password":password},
             // data:"username="+username+"&password="+password,  // 拼接这个太麻烦了
