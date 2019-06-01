@@ -1,6 +1,5 @@
 package com.suki.remindyourself.web.Servlet;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.suki.remindyourself.dao.UserDao;
@@ -14,12 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-// main.html进行删除操作时，传到服务器的json数据包含要删除的行的信息
-@WebServlet("/deleteServlet")
-public class DeleteServlet extends HttpServlet {
+// 进行[事件状态]更新操作的Servlet
+@WebServlet("/updateServlet")
+public class UpdateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.doGet(req, resp);
+        this.doPost(req, resp);
     }
 
     @Override
@@ -28,24 +27,22 @@ public class DeleteServlet extends HttpServlet {
         req.setCharacterEncoding("utf-8");
         resp.setContentType("text/html;charset=utf-8");
 
-        // 通过session获取User对象
+        // 获取对象User
         HttpSession session = req.getSession();
-        User u = (User) session.getAttribute("user");
+        User u = (User)session.getAttribute("user");
 
-        // 接收来自前端返回的json数据
-        // deleteJson数据格式为: [{"establish_time":"2019-07-31 10:30","remind_time":"2019-05-12 10:30","content":"特特特特特特","state":"1"},{},{}...]
+        // 获取updateJson数据
+        // updateJson数据格式：[{"establish_time":"2019-05-31 10:30","remind_time":"2019-06-01 12:00","content":"提醒事项Demo","state":"0"},{},{}...]
+        String updateJson = req.getParameter("updateJson");
+        System.out.println(updateJson);
+        // 目的是把[updateJson]里的数据的state在数据库里由0改为1即可
         JSONObject jsonObject = new JSONObject();
         UserDao userDao = new UserDao();
-        String json = req.getParameter("deleteJson");
-        System.out.println(json);
-        JSONArray jsonArray = JSONArray.parseArray(json);  // 将str化为JsonArray对象
+        JSONArray jsonArray = JSONArray.parseArray(updateJson);
         for (Object o : jsonArray){
-            jsonObject = (JSONObject)o;  // 再把JSonArray里面的每一个对象化为JsonObject对象
+            jsonObject = (JSONObject)o;
             System.out.println(jsonObject.get("establish_time"));
-            // 对每一条delete记录给数据库删除操作
-            userDao.delete(u, jsonObject);
+            userDao.update(u, jsonObject);
         }
-
-
     }
 }

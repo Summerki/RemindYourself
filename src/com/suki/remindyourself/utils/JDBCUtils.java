@@ -1,5 +1,6 @@
 package com.suki.remindyourself.utils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.suki.remindyourself.domain.Event;
 import com.suki.remindyourself.domain.PropertiesDomain;
 import com.suki.remindyourself.domain.User;
@@ -49,7 +50,7 @@ public class JDBCUtils {
     private static void getJDBCConnection(PropertiesDomain propertiesDomain){
         try {
             Class.forName(propertiesDomain.getDriverClassName());
-            conn = DriverManager.getConnection(propertiesDomain.getUrl() + "/" + propertiesDomain.getDataBase(), propertiesDomain.getUsername(), p.getPassword());
+            conn = DriverManager.getConnection(propertiesDomain.getUrl() + "/" + propertiesDomain.getDataBase() + "?useUnicode=true&characterEncoding=UTF-8", propertiesDomain.getUsername(), p.getPassword());
             System.out.println("连接数据库成功");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
@@ -90,7 +91,7 @@ public class JDBCUtils {
     static ArrayList<Event> eventList;
     // 根据指定sql语句找到符合条件的event表中的行
     public static ArrayList<Event> selectEventFromMySql(String sql){
-        JDBCUtils.getJDBCConnection(JDBCUtils.readProperties());  // 获得Mysql连接
+//        JDBCUtils.getJDBCConnection(JDBCUtils.readProperties());  // 获得Mysql连接
         try {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -117,6 +118,7 @@ public class JDBCUtils {
     // 根据指定sql语句删除event数据库中指定的行
     public static void deleteFromEventTable(String sql){
         JDBCUtils.getJDBCConnection(JDBCUtils.readProperties());  // 获得Mysql连接
+
         try {
             ps = conn.prepareStatement(sql);
             int updateCount = ps.executeUpdate();  // 返回更新的行数
@@ -124,6 +126,49 @@ public class JDBCUtils {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("JDBCUtils类的deleteFromEventTable函数出现错误");
+        }
+
+    }
+
+
+    // 根据指定sql语句更新[event]表数据
+    public static void updateFromEventTable(String sql){
+
+        JDBCUtils.getJDBCConnection(JDBCUtils.readProperties());  // 获得Mysql连接
+
+        try {
+            ps = conn.prepareStatement(sql);
+            int updateCount = ps.executeUpdate();
+            System.out.println("返回执行更新操作的行数--->" + updateCount);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("JDBCUtils类的updateFromEventTable函数出现了错误");
+        }
+    }
+
+
+    // 插入一条数据到[event]之中
+    public static void insertFromEventTable(String sql, User u, JSONObject jsonObject){
+        String userId = u.getId() + "";
+        String establishTime = (String) jsonObject.get("establish_time");
+        String remindTime = (String) jsonObject.get("remind_time");
+        String content = (String)jsonObject.get("content");
+        String state = (String)jsonObject.get("state");
+
+        JDBCUtils.getJDBCConnection(JDBCUtils.readProperties());  // 获得Mysql连接
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setObject(1, establishTime);
+            ps.setObject(2, remindTime);
+            ps.setObject(3, content);
+            ps.setObject(4, state);
+            ps.setObject(5, userId);
+            int insertCount = ps.executeUpdate();
+            System.out.println("返回执行插入操作的行数-->" + insertCount);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("JDBCUtils类的insertFromEventTable方法出现了异常");
         }
 
     }

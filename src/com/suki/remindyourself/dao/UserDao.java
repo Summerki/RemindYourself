@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.suki.remindyourself.domain.Event;
 import com.suki.remindyourself.domain.User;
 import com.suki.remindyourself.utils.JDBCUtils;
+import sun.rmi.server.UnicastServerRef;
 
 import java.util.ArrayList;
 
@@ -18,7 +19,7 @@ public class UserDao {
      * @return  返回查询到的User对象，有则返回User，无则返回null
      */
     public User checkLogin(User loginUser){
-        String sql = "select * from " + JDBCUtils.readProperties().getUserTable() + " where username = ? and password = ?";
+        String sql = "select * from " + JDBCUtils.readProperties().getUserTable() + " where username = ? and password = ?" + ";";
         u = JDBCUtils.selectFromMySql(sql, loginUser);
         return u;
     }
@@ -32,7 +33,7 @@ public class UserDao {
      */
     public ArrayList<Event> mainAjaxReturn(User u){
         String userId = u.getId() + "";
-        String sql = "select * from " + JDBCUtils.readProperties().getEventTable() + " where for_user_id = " + userId;
+        String sql = "select * from " + JDBCUtils.readProperties().getEventTable() + " where for_user_id = " + userId + ";";
         ArrayList<Event> eventList = JDBCUtils.selectEventFromMySql(sql);
         return eventList;
     }
@@ -52,13 +53,47 @@ public class UserDao {
         String content = (String)jsonObject.get("content");
         String state = (String)jsonObject.get("state");
 
-        String sql = "delete from " + JDBCUtils.readProperties().getEventTable() +
-                " where for_user_id = " + userId + " and establish_time = " + "\'" + establishTime + "\'" + " and remind_time = " + "\'" + remindTime + "\'" +
-                " and content = " + "\'"  + content + "\'" +" and state = " + state;
+//        String sql = "delete from " + JDBCUtils.readProperties().getEventTable() +
+//                " where for_user_id = " + userId + " and establish_time = " + "\'" + establishTime + "\'" + " and remind_time = " + "\'" + remindTime + "\'" +
+//                " and content = " + "\'"  + content + "\'" +" and state = " + state;
+        String sql = "delete from " + JDBCUtils.readProperties().getEventTable() + " where for_user_id = '" + userId +
+                "' and establish_time = '" + establishTime + "' and remind_time = '" + remindTime + "' and content = '" + content + "'";
         System.out.println(sql);
 
         JDBCUtils.deleteFromEventTable(sql);
 
+    }
+
+
+    /**
+     * 从数据库里更新[event]表的[state]从0变为1
+     * @param u
+     * @param jsonObject
+     */
+    public void update(User u, JSONObject jsonObject){
+        String userId = u.getId() + "";
+        String establishTime = (String) jsonObject.get("establish_time");
+        String remindTime = (String) jsonObject.get("remind_time");
+        String content = (String)jsonObject.get("content");
+        String state = (String)jsonObject.get("state");
+
+        String sql = "update event set state = '1' where for_user_id = '" + userId + "' and establish_time = '" + establishTime + "' and remind_time = '" + remindTime + "' and content = '" + content + "'";
+        System.out.println(sql);
+        JDBCUtils.updateFromEventTable(sql);
+
+    }
+
+
+    /**
+     * 插入一条数据到[event]表中
+     * @param u
+     * @param jsonObject
+     */
+    public void insert(User u, JSONObject jsonObject){
+
+        String sql = "insert into event (establish_time, remind_time, content, state, for_user_id) values(?, ?, ?, ?, ?)";
+
+        JDBCUtils.insertFromEventTable(sql, u, jsonObject);
     }
 
 }
