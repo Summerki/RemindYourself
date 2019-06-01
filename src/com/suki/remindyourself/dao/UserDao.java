@@ -1,5 +1,6 @@
 package com.suki.remindyourself.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.suki.remindyourself.domain.Event;
 import com.suki.remindyourself.domain.User;
 import com.suki.remindyourself.utils.JDBCUtils;
@@ -34,6 +35,30 @@ public class UserDao {
         String sql = "select * from " + JDBCUtils.readProperties().getEventTable() + " where for_user_id = " + userId;
         ArrayList<Event> eventList = JDBCUtils.selectEventFromMySql(sql);
         return eventList;
+    }
+
+
+    /**
+     * 从数据库删除某些指定行的操作
+     * User对象是为了获得u.getId()--->这是唯一id
+     * jsonObject对象是为了获取establish_time、remind_time、content、state信息，用于删除时的条件判断
+     * @param u
+     * @param jsonObject
+     */
+    public void delete(User u, JSONObject jsonObject){
+        String userId = u.getId() + "";
+        String establishTime = (String) jsonObject.get("establish_time");
+        String remindTime = (String) jsonObject.get("remind_time");
+        String content = (String)jsonObject.get("content");
+        String state = (String)jsonObject.get("state");
+
+        String sql = "delete from " + JDBCUtils.readProperties().getEventTable() +
+                " where for_user_id = " + userId + " and establish_time = " + "\'" + establishTime + "\'" + " and remind_time = " + "\'" + remindTime + "\'" +
+                " and content = " + "\'"  + content + "\'" +" and state = " + state;
+        System.out.println(sql);
+
+        JDBCUtils.deleteFromEventTable(sql);
+
     }
 
 }

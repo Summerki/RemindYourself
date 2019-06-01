@@ -114,6 +114,20 @@ public class JDBCUtils {
     }
 
 
+    // 根据指定sql语句删除event数据库中指定的行
+    public static void deleteFromEventTable(String sql){
+        JDBCUtils.getJDBCConnection(JDBCUtils.readProperties());  // 获得Mysql连接
+        try {
+            ps = conn.prepareStatement(sql);
+            int updateCount = ps.executeUpdate();  // 返回更新的行数
+            System.out.println("返回进行删除操作的行数--->" + updateCount);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("JDBCUtils类的deleteFromEventTable函数出现错误");
+        }
+
+    }
+
     // just for test
     public static void main(String[] args) {
         PropertiesDomain propertiesDomain = JDBCUtils.readProperties();
