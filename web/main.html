@@ -103,7 +103,7 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="">欢迎<span id="get_user_span_id"></span></a></li>
-                        <li><a href="#">注销登录</a></li>
+                        <li><a href="javascript:void(0);" class="logout_a" onclick="logout_a_event()">注销登录</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
@@ -435,6 +435,26 @@
             }
         });
     };
+
+    
+    // 注销登录 的函数
+    function logout_a_event(){
+        open("login.html", "_self");
+        $.ajax({
+            url:"/remindYourself/logoutServlet",
+            type:"post",
+            data:{"logout":"true"},
+            dataType:"json",
+            success:function (recvJsonData) {
+                
+            },
+            error:function (recvJsonData) {
+                
+            }
+        });
+
+    }
+
 
 
 

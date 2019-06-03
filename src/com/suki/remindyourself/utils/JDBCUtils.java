@@ -105,8 +105,8 @@ public class JDBCUtils {
                 event.setEstablishTime(rs.getString(2));
                 event.setRemindTime(rs.getString(3));
                 event.setContent(rs.getString(4));
-                event.setState(rs.getInt(5));
-                event.setForUserId(rs.getInt(6));
+                event.setState(rs.getString(5));
+                event.setForUserId(rs.getString(6));
                 eventList.add(event);
             }
             return eventList;
@@ -215,6 +215,59 @@ public class JDBCUtils {
         }
 
     }
+
+
+    // 在 [发送邮件Servlet] 时每隔20s遍历数据库找到所有事件集合
+    static Event forSendEmailEvent;
+    static ArrayList<Event> forSendEmailEventList = new ArrayList<>();
+    public static ArrayList<Event> findAllEvent(String sql){
+        JDBCUtils.getJDBCConnection(JDBCUtils.readProperties());  // 获得Mysql连接
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                forSendEmailEvent = new Event();
+                forSendEmailEvent.setId(rs.getInt(1));
+                forSendEmailEvent.setEstablishTime(rs.getString(2));
+                forSendEmailEvent.setRemindTime(rs.getString(3));
+                forSendEmailEvent.setContent(rs.getString(4));
+                forSendEmailEvent.setState(rs.getString(5));
+                forSendEmailEvent.setForUserId(rs.getString(6));
+                forSendEmailEventList.add(forSendEmailEvent);
+            }
+            return forSendEmailEventList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("JDBCUtils类的findAllEvent方法出错了");
+            return null;
+        }
+
+    }
+
+
+    // 在 [发送邮件Servlet] 时每隔20s遍历数据库找到所有的用户集合
+    static User forSendEmailUser;
+    public static User findSendEmailUser(String sql){
+        JDBCUtils.getJDBCConnection(JDBCUtils.readProperties());  // 获得Mysql连接
+        try {
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()){
+                forSendEmailUser = new User();
+                forSendEmailUser.setId(rs.getInt(1));
+                forSendEmailUser.setUsername(rs.getString(2));
+                forSendEmailUser.setPassword(rs.getString(3));
+                forSendEmailUser.setEmail(rs.getString(4));
+            }
+            return forSendEmailUser;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("JDBCUtils类的findSendEmailUser方法出现了问题");
+            return null;
+        }
+
+    }
+
 
     // just for test
     public static void main(String[] args) {

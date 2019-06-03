@@ -8,8 +8,8 @@ public class Event {
     private String establishTime;
     private String remindTime;
     private String content;
-    private int state;
-    private int forUserId;
+    private String state;
+    private String forUserId;
 
     @Override
     public String toString() {
@@ -21,6 +21,14 @@ public class Event {
                 ", state=" + state +
                 ", forUserId=" + forUserId +
                 '}';
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void setForUserId(String forUserId) {
+        this.forUserId = forUserId;
     }
 
     public String getEstablishTime() {
@@ -56,19 +64,12 @@ public class Event {
         this.content = content;
     }
 
-    public int getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(int state) {
-        this.state = state;
-    }
-
-    public int getForUserId() {
+    public String getForUserId() {
         return forUserId;
     }
 
-    public void setForUserId(int forUserId) {
-        this.forUserId = forUserId;
-    }
 }
