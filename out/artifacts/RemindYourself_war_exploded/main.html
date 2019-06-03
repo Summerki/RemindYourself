@@ -205,9 +205,9 @@
     // checkbox的全选全不选功能完成
     function first_check_event() {
         var first_check = document.getElementById("first_tr_th");
-        alert("进来了");
+        // alert("进来了");
         checkbox_arr = $("input[type='checkbox']");
-        alert(checkbox_arr.length);
+        // alert(checkbox_arr.length);
         for (var i = 0; i < checkbox_arr.length; i++){
             checkbox_arr[i].checked= first_check.checked;
         }
@@ -217,14 +217,14 @@
     function add_to_table() {
         // 点击 创建新条目 事件
         var new_notify = document.getElementById("new_notify").value;
-        alert(new_notify);
+        // alert(new_notify);
 
         var new_notify_time = document.getElementById("new_notify_time").value;
-        alert(new_notify_time);
+        // alert(new_notify_time);
         // 获得现在的时间
         var now_time = (new Date()).getTime();
         var now_time_format = new Date(now_time).format("Y-m-d H:i");
-        alert(now_time_format);
+        // alert(now_time_format);
 
         // 获取当前[class='td_id']的td元素集合
         // 但是会出现两种情况，有可能这个用户一开始就没有建立[待办事项]，那么这个td元素集合为空
@@ -274,7 +274,7 @@
                 data:{"insertJson":new_event_json_str},
                 dataType:"json",
                 success:function (recvJsonData) {
-                    
+
                 },
                 error:function (recvJsonData) {
 
@@ -301,7 +301,7 @@
         // alert(time_2);
 
         var a = (Date.parse(time_1) - Date.parse(time_2)) / 3600 / 1000;
-        alert(a);
+        // alert(a);
         if (a < 0){
             return "小于";
         } else if (a == 0){
@@ -395,11 +395,11 @@
                 }else {
                     td_state_del = "1";
                 }
-                alert(td_now_time_del + "--" + td_new_notify_time_del + "--" + td_new_notify_del + "--" + td_state_del);
+                // alert(td_now_time_del + "--" + td_new_notify_time_del + "--" + td_new_notify_del + "--" + td_state_del);
                 // 构建json字符串
                 var td_del_json = {"establish_time":td_now_time_del, "remind_time":td_new_notify_time_del, "content":td_new_notify_del, "state":td_state_del};
                 tr_delete_arr.push(td_del_json);
-                alert(tr_delete_arr);
+                // alert(tr_delete_arr);
                 //--------------------
 
             }
@@ -475,7 +475,7 @@
                 // 2. 将表格填充数据库的数据
                 var table = document.getElementById("table");
                 var event_arr = eval(jsonData.event);
-                alert(event_arr);
+                // alert(event_arr);
                 if (event_arr.length != 0){
                     for (var i = 0; i < event_arr.length; i++){
                         var new_notify = event_arr[i].content;
@@ -483,7 +483,7 @@
                         var now_time = event_arr[i].establishTime;
                         var new_td_id = event_arr[i].id;
                         var td_state = event_arr[i].state;
-                        alert(new_notify + "--" + new_notify_time + "--" + now_time + "--" + new_td_id + "--" + td_state);
+                        // alert(new_notify + "--" + new_notify_time + "--" + now_time + "--" + new_td_id + "--" + td_state);
                         if (td_state == "0"){
                             table.innerHTML += "<tr>\n" +
                                 "<td><input type=\"checkbox\" ></td>\n" +

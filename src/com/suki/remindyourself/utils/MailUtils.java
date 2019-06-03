@@ -22,6 +22,18 @@ public final class MailUtils {
     public static boolean sendMail(String to, String text, String title){
         try {
             final Properties props = new Properties();
+
+//            // 为了解决Ubuntu上不能成功发送邮件的问题=============
+//            props.put("mail.host", "203.195.245.250");
+//            props.put("mail.smtp.starttls.enable", "true");
+//            props.put("mail.smtp.starttls.required", "true");
+//            props.put("mail.smtp.port", "465");
+//            props.put("mail.smtp.socketFactory.port", "465");
+//            props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+//            props.put("mail.smtp.socketFactory.fallback", "false");
+//
+//            //==================================================
+
             props.put("mail.smtp.auth", "true");
             props.put("mail.smtp.host", "smtp.qq.com");
 

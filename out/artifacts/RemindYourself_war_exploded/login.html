@@ -133,7 +133,7 @@
                 var user = eval(data.user);
                 if (user != null){
                     alert("登陆成功");
-                    alert(user.password);
+                    // alert(user.password);
                     open("main.html", "_self");
                 } else {
                     alert("用户名或密码错误");
@@ -150,9 +150,9 @@
 
     document.getElementById("td_submit_id").onclick = function () {
         var username = document.getElementById("username").value;
-        alert(username);
+        // alert(username);
         var password = document.getElementById("password").value;
-        alert(password);
+        // alert(password);
         ajax_request(username, password);
     };
 </script>
