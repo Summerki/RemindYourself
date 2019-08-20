@@ -1,0 +1,206 @@
+<!--这一版先不加验证码，以后还要做验证码校验-->
+<!--第一版先简陋点，之后的校验过程输入框右边会有文字提示，如果输入符合要求会弹出绿色的箭头，不符合要求会弹出红色警告文字-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+</head>
+<style>
+    *{
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+    }
+
+    body{
+        /* 下面的四句话是固定的，网上查的自定义网页背景 */
+        background-size:cover;
+        background-attachment:fixed;
+        background-color:#2195f2;
+    }
+
+    .layout{
+        /* border: 1px solid red; */
+        width: 900px;
+        height: 500px;
+        border: 8px solid #EEEEEE;
+        background-color: white;
+        /* 让div水平居中
+        margin: auto; */
+
+        /* 以下一段代码为让一个div处于浏览器中中间的代码 */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+
+    .center{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+     }
+
+    .td_left{
+        /* border: 1px solid red; */
+        width: 100px;
+        height: 45px;
+        text-align: right;
+    }
+
+    .td_left label{
+        color: #8d8d8d;
+    }
+
+    .td_right{
+        /* border: 1px solid green; */
+        padding-left: 50px;
+    }
+
+    #username,#password,#email{
+        width: 250px;
+        height: 30px;
+        border: 1px solid #d0d0d0;
+        /* 设置圆角 */
+        border-radius: 5px;
+        padding-left: 15px;
+    }
+
+    .td_submit{
+        width: 150px;
+        height: 40px;
+        background-color: #ffde65;
+        border: 1px solid #FFD026;
+    }
+</style>
+<body>
+    <div class="layout">
+        <div class="center">
+            <form action="#" method="post">
+                <table>
+                    <tr>
+                        <td class="td_left"><label for="username">用户名</label></td>
+                        <td class="td_right"><input type="text" name="username" id="username" placeholder="请输入用户名" onblur="username_onblur()"></td>
+                    </tr>
+                    <tr>
+                        <td class="td_left"><label for="password">密码</label></td>
+                        <td class="td_right"><input type="password" id="password" name="password" placeholder="请输入密码" onblur="password_onblur()"></td>
+                    </tr>
+                    <tr>
+                        <td class="td_left"><label for="email">绑定邮箱</label></td>
+                        <td class="td_right"><input type="text" id="email" name="email" placeholder="请输入邮箱地址" onblur="email_onblur()"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center"><input type="button" value="注册" class="td_submit" onclick="submit_btn_onclick()"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript">
+    // 1. 本地校验符合最基本的规则：用户名或密码只能是6到12位的英文字母或数字的组合
+    //    邮箱格式只能是XXX.@qq.com或者XXX.@163.com  (目前只做@qq.com的算了)
+    //    邮箱前面的XXX也只能是6至13位的数字
+    //    使用onblur进行本地校验
+    // 2. 符合规则后将数据打包成json数据后发送给后端服务器校验，如果邮箱或用户名有同名的都不允许注册
+    //    使用btn的onclick进行后台校验
+
+    // 1. 先完成本地校验
+
+
+    var reg = /\w{6,12}/;
+    function username_onblur() {
+        var username = document.getElementById("username").value;
+        var res = reg.test(username);
+        if (!res){
+            alert("用户名只能是6至12位的字母数字组合！");
+            document.getElementById("username").value = '';
+        }
+        return res;
+    }
+
+    function password_onblur() {
+        var password = document.getElementById("password").value;
+        var res = reg.test(password);
+        if (!res){
+            alert("密码只能是6至12位的字母数字组合！");
+            document.getElementById("password").value = '';
+        }
+        return res;
+    }
+
+    var email_reg = /\d{6,12}@qq.com/;
+    function email_onblur() {
+        var email = document.getElementById("email").value;
+        var res = email_reg.test(email);
+        if (!res){
+            alert("目前注册邮箱仅支持6至12位的QQ邮箱！");
+            document.getElementById("email").value = '@qq.com';
+        }
+        return res;
+    }
+
+    // 2. 本地符合条件后开始后台校验
+    // 2.1 先将本地数据转成json格式发到后台服务器
+    // 2.2 后台校验结果再通过json格式传给前端进行处理
+
+
+    function submit_btn_onclick(){
+        if (username_onblur() && password_onblur() && email_onblur()){
+            // 2.1
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+            var email = document.getElementById("email").value;
+            var register_json = {"username":username, "password":password, "email":email};
+            var register_json_str = JSON.stringify(register_json);
+            $.ajax({
+                url:"/remindYourself/registerServlet",
+                type:"post",
+                data:{"registerJson":register_json_str},
+                dataType:"json",
+                success:function (recvJsonData) {
+                    // 2.2
+                    if (recvJsonData.checkUsername == 0 && recvJsonData.checkEmail == 0){
+                        alert("恭喜你，注册成功！");
+                        open("login.html", "_self");
+                    } else if (recvJsonData.checkUsername == 1 && recvJsonData.checkEmail == 0) {
+                        alert("抱歉，用户名已被他人注册");
+                        document.getElementById("username").value = '';
+                    } else if (recvJsonData.checkUsername == 0 && recvJsonData.checkEmail == 1) {
+                        alert("抱歉，邮箱已被他人注册");
+                        document.getElementById("email").value = '';
+                    } else {
+                        alert("抱歉，用户名和邮箱都被他人注册");
+                        document.getElementById("username").value = '';
+                        document.getElementById("email").value = '';
+                    }
+                },
+                error:function (recvJsonData) {
+                    alert("系统异常");
+                    open("main.html", "_self");
+                }
+            });
+        } else {
+            alert("仍然有不符合注册格式要求的输入信息存在！");
+        }
+    }
+
+
+
+
+</script>
+</html>

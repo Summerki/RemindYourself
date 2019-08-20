@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Remind Yourself</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <link href="./css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+</head>
+<style>
+    * {
+        margin: 0;
+    }
+
+    html, body {
+        /* 设定body高度为100% 拉到视窗可视的大小 */
+        height: 100%;
+    }
+
+    #id_wrapper {
+        /*设定高度最小为100%, 如果內容区块很多, 可以长大！*/
+        min-height: 100%;
+        position: relative; /*位置relative, 作为footer位置的参考*/
+        /*text-align: center;*/
+    }
+
+    #id_header {
+        height: 40px;
+        line-height: 40px;
+        /*background-color: red;*/
+    }
+
+    #id_content {
+        /* 留出header及footer区块的空间*/
+        padding-top: 40px;
+        padding-bottom: 40px;
+        /*background-color: #2aabd2;*/
+    }
+
+    #id_footer {
+        height: 40px; /*设定footer高度*/
+        position: absolute; /*设定footer绝对位置在底部*/
+        bottom: 0;
+        width: 100%; /*展开footer宽度*/
+        /*background-color: yellow;*/
+        line-height: 40px;
+        text-align: center;
+    }
+
+
+
+    .my_table th, .my_table td{
+        text-align: center;
+    }
+
+    .center{
+        width: 50%;
+        height: 50%;
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+</style>
+<body>
+<div id="id_wrapper">
+    <div id="id_header">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Remind&nbsp;Yourself</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#"></a></li>
+                        <li><a href="#">Keep&nbsp;in&nbsp;touch</a></li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="">欢迎<span id="get_user_span_id"></span></a></li>
+                        <li><a href="javascript:void(0);" class="logout_a" onclick="logout_a_event()">注销登录</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+    </div>
+    <div id="id_content">
+        <div class="center">
+            <table class="table table-bordered table-hover my_table" id="table">
+                <!--<caption>待办事项</caption>-->
+                <tr>
+                    <th><input type="checkbox" class="first_th" id="first_tr_th" onclick="first_check_event()"></th>
+                    <th>条目</th>
+                    <th>创建时间</th>
+                    <th>提醒时间</th>
+                    <th>事件描述</th>
+                    <th>事件状态</th>
+                </tr>
+                <!--<tr>-->
+                    <!--<td><input type="checkbox" ></td>-->
+                    <!--<td class="td_id">1</td>-->
+                    <!--<td>2019-5-29 22:14:11</td>-->
+                    <!--<td>2019-5-30 22:14:11</td>-->
+                    <!--<td>提醒我啊</td>-->
+                    <!--<td class="td_state">进行中</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td><input type="checkbox" ></td>-->
+                    <!--<td class="td_id">2</td>-->
+                    <!--<td>2019-5-29 22:14:11</td>-->
+                    <!--<td>2019-5-30 22:14:11</td>-->
+                    <!--<td>提醒我啊</td>-->
+                    <!--<td class="td_state">进行中</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<td><input type="checkbox" ></td>-->
+                    <!--<td class="td_id">3</td>-->
+                    <!--<td>2019-5-29 22:14:11</td>-->
+                    <!--<td>2019-5-30 22:14:11</td>-->
+                    <!--<td>提醒我啊</td>-->
+                    <!--<td class="td_state">进行中</td>-->
+                <!--</tr>-->
+            </table>
+
+            <br>
+            <!--test-->
+            <div>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="new_notify" class="col-sm-2 control-label">新的提醒事项</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="new_notify" placeholder="请输入新的提醒事项">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="time_input" class="col-sm-2 control-label">新的提醒日期</label>
+                        <div class="col-sm-10">
+                            <div class="input-append date" id="time_input">
+                                <input class="form-control form_datetime" size="16" type="text" value="" readonly id="new_notify_time">
+                                <!--<span class="add-on"><i class="icon-th"></i></span>-->
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="button" class="btn btn-primary" id="create_btn" onclick="add_to_table()">创建新条目</button>
+                            <button type="button" class="btn btn-success" id="marked_btn" onclick="marked_complete_event()">标记为已完成</button>
+                            <button type="button" class="btn btn-danger" id="delete_btn" onclick="delete_select_item_event()">删除选中条目</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+
+        </div>
+    </div>
+    <footer id="id_footer">
+        Summerki的第一个小站Demo，请多支持啊！
+    </footer>
+</div>
+</body>
+
+<!---->
+<script type="text/javascript" src="./js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript" src="./js/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+<script type="text/javascript" src="./js/date.format.js" charset="UTF-8"></script>
+<script type="text/javascript">
+    $(".form_datetime").datetimepicker({
+        format: "yyyy-mm-dd hh:ii",
+        autoclose: true,
+        todayBtn: true,
+        pickerPosition: "bottom-right"
+    });
+
+
+    // checkbox的全选全不选功能完成
+    function first_check_event() {
+        var first_check = document.getElementById("first_tr_th");
+        // alert("进来了");
+        checkbox_arr = $("input[type='checkbox']");
+        // alert(checkbox_arr.length);
+        for (var i = 0; i < checkbox_arr.length; i++){
+            checkbox_arr[i].checked= first_check.checked;
+        }
+    };
+
+
+    function add_to_table() {
+        // 点击 创建新条目 事件
+        var new_notify = document.getElementById("new_notify").value;
+        // alert(new_notify);
+
+        var new_notify_time = document.getElementById("new_notify_time").value;
+        // alert(new_notify_time);
+        // 获得现在的时间
+        var now_time = (new Date()).getTime();
+        var now_time_format = new Date(now_time).format("Y-m-d H:i");
+        // alert(now_time_format);
+
+        // 获取当前[class='td_id']的td元素集合
+        // 但是会出现两种情况，有可能这个用户一开始就没有建立[待办事项]，那么这个td元素集合为空
+        // 另一种情况就是td元素集合不为空
+        // 上面这两种情况也要讨论到
+        var td_arr = document.getElementsByClassName("td_id");
+
+        var time_result = distinct_time(new_notify_time, now_time_format);
+        if (new_notify == ""){
+            alert("[新的提醒事项]不能为空");
+            return;
+        } else if (new_notify_time == ""){
+            alert("[新的提醒日期]不能为空");
+            return;
+        } else if (time_result == "小于" || time_result == "等于"){
+            alert("[新的提醒日期]不能比当前时间小！");
+            return;
+        } else {
+            var table = document.getElementById("table");
+            // 获取原本最后一个checkbox的id值
+
+            // alert(td_arr[td_arr.length - 1].innerHTML);
+            if (td_arr.length == 0){
+                var new_td_id = "1";
+            } else {
+                var new_td_id = (+td_arr[td_arr.length - 1].innerHTML + 1) + "";
+            }
+
+
+            table.innerHTML += "<tr>\n" +
+                "<td><input type=\"checkbox\" ></td>\n" +
+                "<td class=\"td_id\">" + new_td_id + "</td>\n" +
+                "<td class=\"td_now_time\">" + now_time_format + "</td>\n" +
+                "<td class=\"td_new_notify_time\">" + new_notify_time + "</td>\n" +
+                "<td class=\"td_new_notify\">" + new_notify + "</td>\n" +
+                "<td class=\"td_state\">进行中</td>\n" +
+                "</tr>";
+
+            // 构造json对象准备异步请求发送给后台服务器
+            // 每次用户只能新建一个条目
+            // 所以给后台的json格式为：{"establish_time":now_time_format, "remind_time":new_notify_time, "content":new_notify, "state":"0"};
+            var new_event_json = {"establish_time":now_time_format, "remind_time":new_notify_time, "content":new_notify, "state":"0"};
+            var new_event_json_str = JSON.stringify(new_event_json);
+            $.ajax({
+                url:"/remindYourself/insertServlet",
+                type:"post",
+                data:{"insertJson":new_event_json_str},
+                dataType:"json",
+                success:function (recvJsonData) {
+
+                },
+                error:function (recvJsonData) {
+
+                }
+            });
+
+
+        }
+
+    };
+
+
+
+    // 来一个辅助函数，输入两个时间判断大小
+    function distinct_time(time_1, time_2) {
+        time_1 += ":00";
+        time_2 += ":00";
+        var sub_time_1 = time_1.substring(0, 10).split('-');
+        var sub_time_2 = time_2.substring(0, 10).split('-');
+
+        time_1 = sub_time_1[1] + '-' + sub_time_1[2] + '-' + sub_time_1[0] + ' ' + time_1.substring(10, 19);
+        time_2 = sub_time_2[1] + '-' + sub_time_2[2] + '-' + sub_time_2[0] + ' ' + time_2.substring(10, 19);
+        // alert(time_1);
+        // alert(time_2);
+
+        var a = (Date.parse(time_1) - Date.parse(time_2)) / 3600 / 1000;
+        // alert(a);
+        if (a < 0){
+            return "小于";
+        } else if (a == 0){
+            return "等于";
+        } else {
+            return "大于";
+        }
+
+    }
+
+
+    // 按钮 标记为已完成 事件
+    // 更新
+    // 1. 本地浏览器标记为已完成
+    // 2. ajax数据库标记为 已完成
+    function marked_complete_event() {
+        var td_input_arr = $("td > input");  // 获取所有td下所有input集合
+        var td_state_arr = document.getElementsByClassName("td_state");  // 获取所有td中表示状态的集合（也就是每一个tr下的最后一个td）
+
+        //-------------------
+        var tr_update_state_arr = [];  // 准备获取要更新 [事件状态] 那一选项的所有json对象的数组
+        var td_now_time_arr = document.getElementsByClassName("td_now_time");
+        var td_new_notify_time_arr = document.getElementsByClassName("td_new_notify_time");
+        var td_new_notify_arr = document.getElementsByClassName("td_new_notify");
+        for (var i = 0 ; i < td_input_arr.length; i++){
+            if (td_input_arr[i].checked){
+                var td_now_time_update = td_now_time_arr[i].innerHTML;
+                var td_new_notify_time_update = td_new_notify_time_arr[i].innerHTML;
+                var td_new_notify_update = td_new_notify_arr[i].innerHTML;
+                var td_state_update = td_state_arr[i].innerHTML;
+                if (td_state_update == "进行中"){
+                    td_state_update = "0";
+                }else {
+                    td_state_update = "1";
+                }
+                var td_update_json = {"establish_time":td_now_time_update, "remind_time":td_new_notify_time_update, "content":td_new_notify_update, "state":td_state_update};
+                tr_update_state_arr.push(td_update_json);
+            }
+        }
+        //-------------------
+
+        for (var i = 0; i < td_input_arr.length; i++){
+            if (td_input_arr[i].checked){  // 被选中的
+                td_state_arr[i].innerHTML = "已完成";
+            }
+        };
+
+        var json_update_obj = JSON.stringify(tr_update_state_arr);
+        $.ajax({
+            url:"/remindYourself/updateServlet",
+            type:"post",
+            data:{"updateJson":json_update_obj},
+            dataType:"json",
+            success:function(recvJsonData){
+
+            },
+            error:function (recvJsonData) {
+
+            }
+        });
+    };
+    
+    
+    // 按钮 删除选中条目 事件
+    // 更新删除操作
+    // 1. 本地删除
+    // 2. ajax数据库删除
+    function delete_select_item_event() {
+        var td_input_arr = $("td > input");  // 获取所有td下的Input集合
+
+        //-------------
+        var tr_delete_arr = [];  // 准备获取要删除的每一列的集合
+        var td_now_time_arr = document.getElementsByClassName("td_now_time");
+        var td_new_notify_time_arr = document.getElementsByClassName("td_new_notify_time");
+        var td_new_notify_arr = document.getElementsByClassName("td_new_notify");
+        var td_state_arr = document.getElementsByClassName("td_state");
+        //-------------
+
+
+        //------------
+        for (var i = 0; i < td_input_arr.length; i++){
+            if (td_input_arr[i].checked){  // 被选中了
+                //--------------------
+                // var td_id_del = td_id_arr[i].innerHTML;
+                var td_now_time_del = td_now_time_arr[i].innerHTML;
+                var td_new_notify_time_del = td_new_notify_time_arr[i].innerHTML;
+                var td_new_notify_del = td_new_notify_arr[i].innerHTML;
+                var td_state_del = td_state_arr[i].innerHTML;
+                if (td_state_del == "进行中"){
+                    td_state_del = "0";
+                }else {
+                    td_state_del = "1";
+                }
+                // alert(td_now_time_del + "--" + td_new_notify_time_del + "--" + td_new_notify_del + "--" + td_state_del);
+                // 构建json字符串
+                var td_del_json = {"establish_time":td_now_time_del, "remind_time":td_new_notify_time_del, "content":td_new_notify_del, "state":td_state_del};
+                tr_delete_arr.push(td_del_json);
+                // alert(tr_delete_arr);
+                //--------------------
+
+            }
+        }
+        var json_send_obj = JSON.stringify(tr_delete_arr);
+        //----------------
+
+        for (var i = 0; i < td_input_arr.length; i++){
+            if (td_input_arr[i].checked){
+                var td_select_parent_tr = td_input_arr[i].parentNode.parentNode;
+                var td_select_parent_table = td_input_arr[i].parentNode.parentNode.parentNode;
+                td_select_parent_table.removeChild(td_select_parent_tr);
+            }
+        }
+
+        // 删除完成之后还有一个操作，将id[条目]重新排序
+        var td_id_arr = document.getElementsByClassName("td_id");
+        for (var i = 0; i < td_id_arr.length; i++){
+            td_id_arr[i].innerHTML = i + 1;
+        }
+
+        // 异步请求，将要删除的行的信息放在td_del_json传给服务器
+        $.ajax({
+            url:"/remindYourself/deleteServlet",
+            type:"post",
+            data:{"deleteJson":json_send_obj},
+            dataType:"json",
+            success:function (recvJsonData) {
+
+            },
+            error:function (recvJsonData) {
+
+            }
+        });
+    };
+
+    
+    // 注销登录 的函数
+    function logout_a_event(){
+        open("login.html", "_self");
+        $.ajax({
+            url:"/remindYourself/logoutServlet",
+            type:"post",
+            data:{"logout":"true"},
+            dataType:"json",
+            success:function (recvJsonData) {
+                
+            },
+            error:function (recvJsonData) {
+                
+            }
+        });
+
+    }
+
+
+
+
+    // 页面加载完成就开始的异步请求操作
+    // 1. 获取右上角欢迎 XXX 的具体名字
+    // 2. 从数据库中加载 提醒事项
+    window.onload = function () {
+        // 定义json的数据格式
+        // {"user":User对象, "event":[{Event对象},{Event对象},...]}
+        $.ajax({
+            url:"/remindYourself/mainServlet",
+            type:"post",
+            success:function (jsonData) {
+                // 1. 显示欢迎 XXX 具体是谁
+                var user = eval(jsonData.user);
+                document.getElementById("get_user_span_id").innerHTML = user.username;
+
+                // 2. 将表格填充数据库的数据
+                var table = document.getElementById("table");
+                var event_arr = eval(jsonData.event);
+                // alert(event_arr);
+                if (event_arr.length != 0){
+                    for (var i = 0; i < event_arr.length; i++){
+                        var new_notify = event_arr[i].content;
+                        var new_notify_time = event_arr[i].remindTime;
+                        var now_time = event_arr[i].establishTime;
+                        var new_td_id = event_arr[i].id;
+                        var td_state = event_arr[i].state;
+                        // alert(new_notify + "--" + new_notify_time + "--" + now_time + "--" + new_td_id + "--" + td_state);
+                        if (td_state == "0"){
+                            table.innerHTML += "<tr>\n" +
+                                "<td><input type=\"checkbox\" ></td>\n" +
+                                "<td class=\"td_id\">" + new_td_id + "</td>\n" +
+                                "<td class=\"td_now_time\">" + now_time + "</td>\n" +
+                                "<td class=\"td_new_notify_time\">" + new_notify_time + "</td>\n" +
+                                "<td class=\"td_new_notify\">" + new_notify + "</td>\n" +
+                                "<td class=\"td_state\">进行中</td>\n" +
+                                "</tr>";
+                        } else {
+                            table.innerHTML += "<tr>\n" +
+                                "<td><input type=\"checkbox\" ></td>\n" +
+                                "<td class=\"td_id\">" + new_td_id + "</td>\n" +
+                                "<td class=\"td_now_time\">" + now_time + "</td>\n" +
+                                "<td class=\"td_new_notify_time\">" + new_notify_time + "</td>\n" +
+                                "<td class=\"td_new_notify\">" + new_notify + "</td>\n" +
+                                "<td class=\"td_state\">已完成</td>\n" +
+                                "</tr>";
+                        }
+                    }
+                }
+
+                // 这里还要将显示的[条目/id]排序
+                var td_id_arr = document.getElementsByClassName("td_id");
+                for (var i = 0; i < td_id_arr.length; i++){
+                    td_id_arr[i].innerHTML = i + 1;
+                }
+            },
+            error:function () {
+                alert("系统异常");
+                open("index.html", "_self");
+            },
+            dataType:"json"
+        });
+
+    };
+
+
+
+</script>
+</html>
