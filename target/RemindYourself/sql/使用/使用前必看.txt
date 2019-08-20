@@ -1,0 +1,2 @@
+先在云服务器上建一个remind_yourself库
+进入库之后执行 remind_yourself.sql 文件即可
