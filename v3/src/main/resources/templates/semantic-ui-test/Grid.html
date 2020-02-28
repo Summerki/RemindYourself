@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Grid</title>
+
+    <link rel="stylesheet" href="../../static/css/semantic.min.css">
+</head>
+<body>
+
+    <div class="ui container">
+        <h1 class="ui dividing header">grid网格</h1>
+        <div class="ui grid">
+            <div class="column">1</div>
+            <div class="column">1</div>
+            <div class="column">1</div>
+            <div class="column">1</div>
+            <div class="column">1</div>
+            <div class="column">1</div>
+            <div class="column">1</div>
+            <div class="column">1</div>
+            <div class="column">1</div>
+            <div class="column">1</div>
+            <div class="column">1</div>
+            <div class="column">1</div>
+            <div class="column">1</div>
+            <div class="column">1</div>
+            <div class="column">1</div>
+            <div class="column">1</div>
+        </div>
+
+        <h1 class="ui dividing header">分割divided</h1>
+        <!--three column:每行三列-->
+        <div class="ui three column divided grid">
+            <!--row:每行-->
+            <div class="row">
+                <div class="column">1</div>
+                <div class="column">1</div>
+                <div class="column">1</div>
+            </div>
+
+            <div class="row">
+                <div class="column">1</div>
+                <div class="column">1</div>
+                <div class="column">1</div>
+            </div>
+        </div>
+
+        <h1 class="ui dividing header">垂直分割vertically divided</h1>
+        <div class="ui vertically divided grid">
+            <div class="two column row">
+                <div class="column">1</div>
+                <div class="column">1</div>
+            </div>
+
+            <div class="three column row">
+                <div class="column">1</div>
+                <div class="column">1</div>
+                <div class="column">1</div>
+            </div>
+        </div>
+
+        <h1 class="ui dividing header">单元celled</h1>
+        <div class="ui celled grid">
+            <div class="row">
+                <!--未指定每行占多少格子,默认16个格子-->
+                <div class="three wide column">1</div>
+                <div class="thirteen wide column">1</div>
+            </div>
+        </div>
+
+        <h1 class="ui dividing header">内部单元innner celled</h1>
+        <div class="ui internally celled grid">
+            <div class="row">
+                <div class="three wide column">1</div>
+                <div class="thirteen wide column"></div>
+            </div>
+            <div class="row">
+                <div class="three wide column">1</div>
+                <div class="thirteen wide column"></div>
+            </div>
+        </div>
+
+        <h1 class="ui dividing header">浮动</h1>
+        <div class="ui grid">
+            <div class="left floated five wide column">1</div>
+            <div class="right floated five wide column">1</div>
+        </div>
+
+
+        <h1 class="ui dividing header">拉伸stretched</h1>
+        <div class="ui three column divided grid">
+            <div class="stretched row">
+                <div class="column">
+                    <div class="ui segment">1</div>
+                </div>
+                <div class="column">
+                    <div class="ui segment">1</div>
+                    <div class="ui segment">2</div>
+                </div>
+                <div class="column">
+                    <div class="ui segment">1</div>
+                    <div class="ui segment">2</div>
+                    <div class="ui segment">3</div>
+                </div>
+            </div>
+        </div>
+
+        <h1 class="ui dividing header">反向reversed</h1>
+        <!--mobile vertically reversed grid:整个grid在手机端按照row反向-->
+        <div class="ui mobile vertically reversed grid">
+            <div class="row">
+                <div class="column">手机 行 5</div>
+                <div class="column">手机 行 4</div>
+            </div>
+            <div class="row">
+                <div class="column">手机 行 3</div>
+            </div>
+            <div class="row">
+                <div class="column">手机 行 2</div>
+            </div>
+            <div class="row">
+                <div class="column">手机 行 1</div>
+            </div>
+        </div>
+
+        <div class="ui grid">
+            <!--mobile reversed row:该行row在手机端按照column横向反向-->
+            <div class="three column mobile reversed row">
+                <div class="column">手机 行 6</div>
+                <div class="column">手机 行 5</div>
+                <div class="column">手机 行 4</div>
+            </div>
+            <div class="row">
+                <div class="column">手机 行 3</div>
+            </div>
+            <div class="row">
+                <div class="column">手机 行 2</div>
+            </div>
+            <div class="row">
+                <div class="column">手机 行 1</div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<!--JQuery必须引入在semantic之前-->
+<script src="../../static/js/jquery-3.3.1.min.js"></script>
+<script src="../../static/js/jquery-migrate-1.0.0.js"></script>
+<script src="../../static/js/semantic.min.js"></script>
+</body>
+</html>

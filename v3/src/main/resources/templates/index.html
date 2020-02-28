@@ -13,48 +13,75 @@
         body {
             padding: 0;
             margin: 0;
-            background-color: #1b1c1d;
+            background: url("../static/images/bg.png");
         }
 
-        .my-grid {
-            padding: 0 !important;
-            margin: 0 !important;
-            height: 100% !important;
-            width: 100% !important;
+        .my-container {
+            margin-top: 1em !important;
         }
 
-        .my-segment {
-            height: 100% !important;
-            width: 100% !important;
+        footer {
+            position: absolute;
+            bottom: 0px !important;
+            width: 100%; !important;
         }
     </style>
 </head>
 <body>
 
-<div class="ui grid my-grid">
-    <div class="ui inverted center aligned basic segment my-segment">
+    <div class="ui container my-container">
+        <div class="ui grid">
+            <div class="three column stackable row">
+                <div class="middle aligned center aligned column">
+                    <div class="ui huge header">
+                        <i class="envelope icon"></i>
+                        <div class="content">
+                            RemindYourself
+                            <div class="sub header">An Elegant Web Reminder App</div>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="ui container">
-            <div class="ui large secondary inverted text menu">
-                <h1 class="item"><i class="inverted envelope icon"></i>RemindYourself</h1>
-                <h1 class="item">An Elegant Web Reminder App</h1>
-                <div class="right item">
-                    <a class="ui inverted button">登录</a>
-                    <a class="ui inverted button">注册</a>
+                <div class="right floated middle aligned right aligned column">
+                    <div class="ui large header">
+                        <div class="content">
+                            sign up
+                        </div>
+                        <a href="./register.html"><i class="hand point left outline icon"></i></a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="ui text container">
-            <h1 class="ui inverted header">
-                假定一个公司
-            </h1>
-            <h2>你想做的时候就去做</h2>
-            <div class="ui huge primary button">开始 <i class="right arrow icon"></i></div>
-        </div>
+            <div class="one column row">
+                <div class="column">
+                    <div class="ui center aligned basic segment">
+                        <img src="../static/images/email.svg" class="ui centered middle  image">
 
+                        <div class="ui large header">
+                            Keep in touch &nbsp;<i class="heart icon"></i>常联系
+                        </div>
+
+                        <div class="ui large header">For one thing</div>
+
+                        <div class="ui huge header">Just remind you of something</div>
+
+                        <div class="ui large header">
+                            sign in
+                            <a href="./login.html"><i class="arrow alternate circle right outline icon"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-</div>
+
+    <footer>
+        <div class="ui center aligned basic segment">
+            <div class="ui header">First web app build by Summerki</div>
+        </div>
+    </footer>
+
 <!--JQuery必须引入在semantic之前-->
 <script src="../static/js/jquery-3.3.1.min.js"></script>
 <script src="../static/js/jquery-migrate-1.0.0.js"></script>
