@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>RemindYourself-移动端-Main</title>
+
+    <link rel="stylesheet" href="../../static/css/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css">
+    <link rel="stylesheet" href="../../static/layui/css/layui.css">
+
+    <style>
+
+        .my-margin-container {
+            margin-top: 2em !important;
+            margin-bottom: 1em !important;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,body {
+            height: 100%;
+        }
+
+        .my-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .my-section {
+            flex: 1 0 auto;
+        }
+
+        footer {
+            flex: 0 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="my-container">
+        <section class="my-section">
+            <!--导航栏-->
+            <!--<nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small">-->
+                <!--<div class="ui container">-->
+                    <!--<div class="ui inverted secondary stackable menu">-->
+                        <!--<h3 class="ui teal header item">-->
+                            <!--<i class="envelope icon"></i>-->
+                            <!--<div>RemindYourself</div>-->
+                        <!--</h3>-->
+                        <!--<h4 href="#" class="item">keep in touch</h4>-->
+                        <!--<div class="right menu">-->
+                            <!--<h4 class="item"><div>欢迎&nbsp;</div><span>summerki</span></h4>-->
+                            <!--<h4 class="item"><a class="item">注销登录</a></h4>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</nav>-->
+            <ul class="layui-nav" lay-filter="my-mobile-nav">
+                <li class="layui-nav-item" style="color: #00b5ad !important;"><i class="envelope icon"></i>RemindYourself</li>
+                <li class="layui-nav-item layui-layout-right">
+                    <a href="javascript:;">summerki</a>
+                    <dl class="layui-nav-child">
+                        <a href="javascript:;">注销登录</a>
+                    </dl>
+                </li>
+            </ul>
+
+            <!--中间的表格-->
+            <div class="ui basic segment">
+                <div class="ui container my-margin-container">
+                    <table class="ui selectable celled small very compact unstackable table">
+                        <thead class="center aligned middle aligned">
+                            <tr>
+                                <th><input type="checkbox" class="ui checkbox"></th>
+                                <th>条目</th>
+                                <th>创建时间</th>
+                                <th>提醒时间</th>
+                                <th>事件描述</th>
+                                <th>事件状态</th>
+                            </tr>
+                        </thead>
+                        <tbody class="center aligned middle aligned">
+                            <tr class="negative">
+                                <td><input type="checkbox" class="ui checkbox"></td>
+                                <td>1</td>
+                                <td>2020-02-29 16:12:00</td>
+                                <td>2020-02-29 16:12:01</td>
+                                <td>Test</td>
+                                <td>以完成</td>
+                            </tr>
+                            <tr class="positive">
+                                <td><input type="checkbox" class="ui checkbox"></td>
+                                <td>1</td>
+                                <td>2020-02-29 16:12:00</td>
+                                <td>2020-02-29 16:12:01</td>
+                                <td>Test</td>
+                                <td>进行中</td>
+                            </tr>
+                            <tr class="positive">
+                                <td><input type="checkbox" class="ui checkbox"></td>
+                                <td>1</td>
+                                <td>2020-02-29 16:12:00</td>
+                                <td>2020-02-29 16:12:01</td>
+                                <td>Test长的空间和附件是肯定回复可见沙克但是发射点发啊但是</td>
+                                <td>进行中</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!--新建待办事项模块-->
+            <div class="ui basic segment">
+                <div class="ui container">
+                    <div class="ui form">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="paper plane outline icon"></i>
+                                <input type="text" name="newNotify" placeholder="请输入新的提醒事项">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="hourglass half icon"></i>
+                                <input type="text" class="layui-input" id="layDate" placeholder="请选择提醒时间(格式化时间格式为yyyy-MM-dd HH:mm:ss)">
+                            </div>
+                        </div>
+                        <div class="layui-input-inline">
+                            <div class="ui mini primary submit basic button">创建新的条目</div>
+                            <div class="ui mini green basic button">标记为已完成</div>
+                            <div class="ui mini red basic button">删除选中条目</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <!--footer-->
+            <div class="ui center aligned basic segment">
+                Summerki的第一个Web App,请多支持!
+            </div>
+        </footer>
+    </div>
+
+
+<!--JQuery必须引入在semantic之前-->
+<script src="../../static/js/jquery-3.3.1.min.js"></script>
+<script src="../../static/js/jquery-migrate-1.0.0.js"></script>
+<script src="../../static/js/semantic.min.js"></script>
+<script src="../../static/layui/layui.js"></script>
+
+<script>
+    var selectTime;
+    var selectValue;
+    var isSelect = false;
+    layui.use(['laydate', 'element'], function () {
+        var laydate = layui.laydate;
+        var element = layui.element; // 二级菜单需要依赖element模块
+
+        // 执行一个laydate实例
+        //日期时间选择器
+        laydate.render({
+            elem: '#layDate',
+            type: 'datetime',
+            done: function (value, date, endDate) {
+                console.log('1-->' + value);
+                console.log('2-->' + JSON.stringify(date));
+                selectValue = value;
+                selectTime = date;
+                isSelect = true;
+            }
+        });
+
+        // 监听点击事件
+        element.on('nav(my-mobile-nav)', function (elem) {
+            console.log(elem[0].text); // 测试,拿到每次点击的选项的text
+        });
+    });
+
+
+    $('.submit').click(function () {
+        if (isSelect) {
+            console.log('3-->' + selectValue);
+            console.log('4-->' + JSON.stringify(selectTime));
+        }
+    });
+
+</script>
+
+</body>
+</html>
