@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Form</title>
+
+    <link rel="stylesheet" href="../../static/css/semantic.min.css">
+</head>
+<body>
+    <div class="ui container">
+        <h1 class="ui dividing header">标准表单</h1>
+        <div class="ui form">
+            <div class="field">
+                <label for="first-name">姓</label>
+                <input type="text" name="first-name" placeholder="姓" id="first-name">
+            </div>
+            <div class="field">
+                <label for="last-name">名</label>
+                <input type="text" name="last-name" placeholder="名" id="last-name">
+            </div>
+            <div class="field">
+                <div class="ui checkbox">
+                    <input type="checkbox" tabindex="0" class="hidden" id="checkbox">
+                    <label for="checkbox">我同意条款和条件</label>
+                </div>
+            </div>
+            <button class="ui button" type="submit">提交</button>
+        </div>
+
+        <h1 class="ui dividing header"></h1>
+    </div>
+
+
+<!--JQuery必须引入在semantic之前-->
+<script src="../../static/js/jquery-3.3.1.min.js"></script>
+<script src="../../static/js/jquery-migrate-1.0.0.js"></script>
+<script src="../../static/js/semantic.min.js"></script>
+</body>
+</html>
