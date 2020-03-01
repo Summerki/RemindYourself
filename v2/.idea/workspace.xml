@@ -29,8 +29,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/main.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1691">
-              <caret line="52" column="35" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="35" />
+            <state relative-caret-position="475">
+              <caret line="196" column="40" selection-start-line="196" selection-start-column="40" selection-end-line="196" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -56,7 +56,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/register.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
+            <state relative-caret-position="2641">
               <caret line="139" column="36" selection-start-line="139" selection-start-column="19" selection-end-line="139" selection-end-column="36" />
             </state>
           </provider>
@@ -131,11 +131,11 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="585" />
-    <option name="y" value="260" />
-    <option name="width" value="920" />
-    <option name="height" value="1090" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="292" />
+    <option name="y" value="66" />
+    <option name="width" value="1460" />
+    <option name="height" value="1055" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -211,7 +211,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1566275168980" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="F:/2020-1-3/E/Project" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
@@ -322,18 +322,19 @@
       <workItem from="1566273784414" duration="1415000" />
       <workItem from="1566292000460" duration="61000" />
       <workItem from="1582953731452" duration="2654000" />
-      <workItem from="1582957592247" duration="1816000" />
+      <workItem from="1582957592247" duration="4294000" />
+      <workItem from="1583063423804" duration="596000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5946000" />
+    <option name="totallyTimeSpent" value="9020000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="838" extended-state="7" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20509383" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15549597" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -492,6 +493,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/register.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2641">
+          <caret line="139" column="36" selection-start-line="139" selection-start-column="19" selection-end-line="139" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/suki/remindyourself/web/Servlet/LoginServlet.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
@@ -508,17 +516,10 @@
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/register.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="139" column="36" selection-start-line="139" selection-start-column="19" selection-end-line="139" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/main.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1691">
-          <caret line="52" column="35" selection-start-line="52" selection-start-column="35" selection-end-line="52" selection-end-column="35" />
+        <state relative-caret-position="475">
+          <caret line="196" column="40" selection-start-line="196" selection-start-column="40" selection-end-line="196" selection-end-column="40" />
         </state>
       </provider>
     </entry>

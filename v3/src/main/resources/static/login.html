@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>RemindYourself-Login</title>
 
-    <link rel="stylesheet" href="../../static/css/semantic.min.css">
-    <link rel="stylesheet" href="../../static/css/me.css">
+    <link rel="stylesheet" href="css/semantic.min.css">
+    <link rel="stylesheet" href="css/me.css">
 
     <style type="text/css">
         .grid {
@@ -21,18 +21,9 @@
         .my-used-for-computer {
             height: 100%;
         }
-        .my-used-for-mobile {
-            display: none !important;
-        }
         @media screen and (max-width: 768px) {
             .my-used-for-computer {
                 display: none !important;
-            }
-
-            .my-used-for-mobile {
-                height: 100%;
-                padding: 1em !important;
-                display: block !important;
             }
         }
     </style>
@@ -71,56 +62,16 @@
                 </form>
 
                 <div class="ui message">
-                    新用户？ <a href="../../static/register.html">注册</a>
+                    新用户？ <a href="register.html">注册</a>
                 </div>
             </div>
         </div>
     </div>
-
-    <!--移动端-->
-    <div class="my-used-for-mobile">
-        <div class="ui middle aligned center aligned grid my-mobile-container">
-            <div class="column">
-                <h2 class="ui teal image header">
-                    <i class="envelope icon"></i>
-                    <div class="content">
-                        登录到账号
-                    </div>
-                </h2>
-                <form class="ui large form">
-                    <div class="ui raised segment">
-                        <div class="field">
-                            <div class="ui left icon input">
-                                <i class="user icon"></i>
-                                <input type="text" name="username" placeholder="请输入用户名">
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="ui left icon input">
-                                <i class="lock icon"></i>
-                                <input type="password" name="password" placeholder="请输入密码">
-                            </div>
-                        </div>
-                        <div class="ui fluid large teal submit button">登录</div>
-                    </div>
-
-                    <div class="ui error message"></div>
-
-                </form>
-
-                <div class="ui message">
-                    新用户？ <a href="../../static/register.html">注册</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
 
 <!--JQuery必须引入在semantic之前-->
-<script src="../../static/js/jquery-3.3.1.min.js"></script>
-<script src="../../static/js/jquery-migrate-1.0.0.js"></script>
-<script src="../../static/js/semantic.min.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/jquery-migrate-1.0.0.js"></script>
+<script src="js/semantic.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         // 表单提交到服务器的ajax请求函数
