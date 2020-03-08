@@ -1,6 +1,6 @@
 package com.suki.remindyourself.util;
 
-public class CheckUserAgentUtil {
+public class CheckUserAgentUtils {
     /**
      * 定义移动端所有可能的请求类型
      */
@@ -9,7 +9,7 @@ public class CheckUserAgentUtil {
     /**
      * 判断 User-Agent 是不是来自移动端
      * @param ua
-     * @return
+     * @return 返回true为移动端
      */
     public static boolean checkAgentIsMobile(String ua) {
         boolean flag = false;
