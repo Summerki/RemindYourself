@@ -28,8 +28,21 @@
                         </div>
                     </div>
                     <div class="ui basic segment">
+                        <!--请求时间-->
+                        <div class="ui horizontal divider">
+                            <h4 class="ui teal header">
+                                <i class="clock outline icon"></i>
+                                <div class="content">
+                                    请求时间
+                                </div>
+                            </h4>
+                        </div>
+                        <div class="ui raised segment error-timestamp">
+                            2020
+                        </div>
+                    </div>
+                    <div class="ui basic segment">
                         <!--请求URL-->
-                        <!--upload-->
                         <div class="ui horizontal divider">
                             <h4 class="ui teal header">
                                 <i class="upload icon"></i>
@@ -39,7 +52,21 @@
                             </h4>
                         </div>
                         <div class="ui raised segment error-url">
-                            http://xxx.xxx.xxx
+                            127.0.0.1
+                        </div>
+                    </div>
+                    <div class="ui basic segment">
+                        <!--请求状态码-->
+                        <div class="ui horizontal divider">
+                            <h4 class="ui teal header">
+                                <i class="handshake outline icon"></i>
+                                <div class="content">
+                                    请求状态码
+                                </div>
+                            </h4>
+                        </div>
+                        <div class="ui raised segment error-status">
+                            200
                         </div>
                     </div>
                     <div class="ui basic segment">
@@ -68,13 +95,15 @@
     // error页面加载完后立即执行ajax请求
     $(document).ready(function () {
         $.ajax({
-            url: '/remindYourself/error1',
+            url: '/remindYourself/errorVo',
             type: 'post',
             dataType: 'json', // 如果后端传回来的是json数据,必须指定dataType
             success: function (data) {
                 console.log(data);
-                $('.error-url').text(data.url);
-                $('.error-msg').text(data.error_msg);
+                $('.error-timestamp').text(data.requestErrorTime);
+                $('.error-url').text(data.requestUrl);
+                $('.error-status').text(data.status + " " + data.statusCodeInfo);
+                $('.error-msg').text(data.errorMsg);
             },
             error: function (data) {
 
