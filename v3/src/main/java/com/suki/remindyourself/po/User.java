@@ -1,7 +1,7 @@
 package com.suki.remindyourself.po;
 
 import com.suki.remindyourself.util.BeanUtil;
-import com.suki.remindyourself.vo.UserTable;
+import com.suki.remindyourself.vo.table.UserTable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

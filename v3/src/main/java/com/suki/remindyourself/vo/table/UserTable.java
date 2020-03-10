@@ -1,4 +1,4 @@
-package com.suki.remindyourself.vo;
+package com.suki.remindyourself.vo.table;
 
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Value;

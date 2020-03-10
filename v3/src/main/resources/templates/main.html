@@ -66,7 +66,7 @@
                             <h2 href="#" class="item">keep in touch</h2>
 
                             <div class="right menu">
-                                <h3 class="item"><div>欢迎&nbsp;</div><span>summerki</span></h3>
+                                <h3 class="item"><div>欢迎&nbsp;</div><span class="username">summerki</span></h3>
                                 <h3 class="item"><a class="item">注销登录</a></h3>
                             </div>
 
@@ -88,8 +88,8 @@
                                 <th>事件状态</th>
                             </tr>
                             </thead>
-                            <tbody class="center aligned middle aligned">
-                            <tr class="negative">
+                            <tbody class="center aligned middle aligned my-tbody">
+                            <!--<tr class="negative">
                                 <td><input type="checkbox" class="ui checkbox"></td>
                                 <td>1</td>
                                 <td>2020-02-29 16:12:00</td>
@@ -104,7 +104,7 @@
                                 <td>2020-02-29 16:12:01</td>
                                 <td>Test</td>
                                 <td>进行中</td>
-                            </tr>
+                            </tr>-->
                             </tbody>
                         </table>
                     </div>
@@ -153,6 +153,65 @@
 <script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
 
 <script>
+    $(document).ready(function () {
+        
+        // 填充table的辅助函数
+        function insertToTbody(index, event) {
+            if (event.state == 0) { // 0代表该事件正在进行中
+                return '<tr class="positive">\n' +
+                '<td><input type="checkbox" class="ui checkbox"></td>\n' +
+                '<td>'+ (index + 1) +'</td>\n' +
+                '<td>'+ event.establishTime +'</td>\n' +
+                '<td>'+ event.remindTime +'</td>\n' +
+                '<td>'+ event.content +'</td>\n' +
+                '<td>进行中</td>\n' +
+                ' </tr>';
+            } else {
+                return '<tr class="negative">\n' +
+                    '<td><input type="checkbox" class="ui checkbox"></td>\n' +
+                    '<td>'+ (index + 1) +'</td>\n' +
+                    '<td>'+ event.establishTime +'</td>\n' +
+                    '<td>'+ event.remindTime +'</td>\n' +
+                    '<td>'+ event.content +'</td>\n' +
+                    '<td>已完成</td>\n' +
+                    ' </tr>';
+            }
+        }
+        
+        
+        /*
+        * main.html 开始就要加载的ajax函数
+        * 获取[user]和该user对应的[events]数组
+        * */
+        $.ajax({
+            url: '/remindYourself/getUserAndEvents',
+            type: 'post',
+            // data: value,
+            dataType: 'json', // 如果后端传回来的是json数据,必须指定dataType
+            success: function (data) {
+                console.log(data);
+                $('.username').text(data.user.username);
+                $.each(data.events, function (index, value) { // index从0开始
+                    $('.my-tbody').append(insertToTbody(index, value));
+                });
+            },
+            error: function (data) {
+
+            }
+        });
+    });
+
+
+
+
+
+
+
+
+
+
+
+    //================================================隔离
     var selectTime;
     var selectValue;
     var isSelect = false;

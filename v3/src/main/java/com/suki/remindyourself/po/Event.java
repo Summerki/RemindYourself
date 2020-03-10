@@ -1,12 +1,12 @@
 package com.suki.remindyourself.po;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.suki.remindyourself.vo.EventTable;
+import com.suki.remindyourself.util.BeanUtil;
+import com.suki.remindyourself.vo.table.EventTable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -25,12 +25,12 @@ public class Event implements RowMapper<Event> {
 
     private Long id;
 
-    @DateTimeFormat(pattern = "yyyy:MM:dd hh:mm:ss")
-    @JsonFormat(pattern = "yyyy:MM:dd hh:mm:ss",timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date establishTime;
 
-    @DateTimeFormat(pattern = "yyyy:MM:dd hh:mm:ss")
-    @JsonFormat(pattern = "yyyy:MM:dd hh:mm:ss",timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date remindTime;
 
     private String content;
@@ -44,11 +44,9 @@ public class Event implements RowMapper<Event> {
      */
     private Long forUserId;
 
-
-    @Autowired
-    EventTable eventTable;
     @Override
     public Event mapRow(ResultSet resultSet, int i) throws SQLException {
+        EventTable eventTable = BeanUtil.getBean(EventTable.class);
         Event event = new Event();
         event.setId(resultSet.getLong(eventTable.idColumn));
         event.setEstablishTime(resultSet.getTimestamp(eventTable.establishTimeColumn));

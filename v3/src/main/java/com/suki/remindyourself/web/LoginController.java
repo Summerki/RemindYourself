@@ -5,9 +5,7 @@ import com.suki.remindyourself.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -36,7 +34,7 @@ public class LoginController {
     public Map<String, Object> checkUser(@RequestParam("username")String username,
                                          @RequestParam("password")String password,
                                          HttpSession session) {
-        log.info("login.html /checkUser 传来的参数{}{}", username, password);
+        log.info("username:{} password:{}", username, password);
         Map<String, Object> map = new HashMap<>();
         User user = userService.checkUser(username, password);
         if (user != null) {
@@ -47,6 +45,15 @@ public class LoginController {
             map.put("status", "fail");
         }
         return map;
+    }
+
+    /**
+     * 表单验证成功后跳转到 main.html
+     * @return
+     */
+    @RequestMapping("/main")
+    public String toMain() {
+        return "main";
     }
 
 }

@@ -2,23 +2,21 @@ package com.suki.remindyourself.dao;
 
 import com.suki.remindyourself.aspect.DaoAspect;
 import com.suki.remindyourself.exception.MySQLException;
+import com.suki.remindyourself.po.Event;
 import com.suki.remindyourself.po.User;
-import com.suki.remindyourself.vo.sql.UserSQL;
-import lombok.extern.slf4j.Slf4j;
+import com.suki.remindyourself.vo.sql.EventSQL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * UserDao
- */
-@Slf4j
+import java.util.List;
+
 @Repository
-public class UserDao {
+public class EventDao {
 
     @Autowired
-    UserSQL userSQL;
+    EventSQL eventSQL;
 
     @Autowired
     DaoAspect daoAspect;
@@ -27,12 +25,12 @@ public class UserDao {
     JdbcTemplate jdbcTemplate;
 
     @Transactional(rollbackFor = MySQLException.class)
-    public User getUserByUsernameAndPassword(String username, String password) {
+    public List<Event> listEventsByForUserId(User user) {
         try {
-            String sql = userSQL.getUserByUsernameAndPasswordSQL;
-            daoAspect.showSQLInfo(sql, new Object[]{username, password});
-            User user = jdbcTemplate.queryForObject(sql, new User(), username, password);
-            return user;
+            String sql = eventSQL.listEventsByForUserIdSQL;
+            daoAspect.showSQLInfo(sql, new Object[]{user.getId()});
+            List<Event> eventList = jdbcTemplate.query(sql, new Event(), user.getId());
+            return eventList;
         } catch (Exception e) {
             throw new MySQLException("查询异常");
         }
