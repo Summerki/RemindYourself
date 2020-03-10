@@ -45,7 +45,7 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="27">
+                <state relative-caret-position="2">
                   <caret line="5" column="163" selection-start-line="5" selection-start-column="163" selection-end-line="5" selection-end-column="163" />
                 </state>
               </provider>
@@ -179,8 +179,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/resources/templates/main.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="538">
-                  <caret line="185" column="16" lean-forward="true" selection-start-line="185" selection-start-column="16" selection-end-line="185" selection-end-column="16" />
+                <state relative-caret-position="304">
+                  <caret line="212" column="8" selection-start-line="212" selection-start-column="8" selection-end-line="212" selection-end-column="8" />
                   <folding>
                     <element signature="e#2052#2058#0" expanded="true" />
                   </folding>
@@ -542,7 +542,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1583844947780" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1583846907235" />
     <property name="last_opened_file_path" value="E:/1-学习视频/15、Spring Boot开发一个小而美的个人博客/6. 课程配套资料与源码/1.1 source_code.zip/资料与配套代码/源代码/blog" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -599,12 +599,12 @@
       <workItem from="1583063417446" duration="19636000" />
       <workItem from="1583651275525" duration="11930000" />
       <workItem from="1583733599105" duration="20551000" />
-      <workItem from="1583805254000" duration="15693000" />
+      <workItem from="1583805254000" duration="17070000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="130588000" />
+    <option name="totallyTimeSpent" value="131965000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -1099,7 +1099,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/application-dev.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
+        <state relative-caret-position="2">
           <caret line="5" column="163" selection-start-line="5" selection-start-column="163" selection-end-line="5" selection-end-column="163" />
         </state>
       </provider>
@@ -1113,8 +1113,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/main.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="538">
-          <caret line="185" column="16" lean-forward="true" selection-start-line="185" selection-start-column="16" selection-end-line="185" selection-end-column="16" />
+        <state relative-caret-position="304">
+          <caret line="212" column="8" selection-start-line="212" selection-start-column="8" selection-end-line="212" selection-end-column="8" />
           <folding>
             <element signature="e#2052#2058#0" expanded="true" />
           </folding>

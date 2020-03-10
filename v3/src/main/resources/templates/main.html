@@ -80,7 +80,7 @@
                         <table class="ui selectable celled table">
                             <thead class="center aligned middle aligned">
                             <tr>
-                                <th><input type="checkbox" class="ui checkbox"></th>
+                                <th><input type="checkbox" class="ui checkbox my-thead-checkbox"></th>
                                 <th>条目</th>
                                 <th>创建时间</th>
                                 <th>提醒时间</th>
@@ -159,7 +159,7 @@
         function insertToTbody(index, event) {
             if (event.state == 0) { // 0代表该事件正在进行中
                 return '<tr class="positive">\n' +
-                '<td><input type="checkbox" class="ui checkbox"></td>\n' +
+                '<td><input type="checkbox" class="ui checkbox my-tbody-checkbox"></td>\n' +
                 '<td>'+ (index + 1) +'</td>\n' +
                 '<td>'+ event.establishTime +'</td>\n' +
                 '<td>'+ event.remindTime +'</td>\n' +
@@ -168,7 +168,7 @@
                 ' </tr>';
             } else {
                 return '<tr class="negative">\n' +
-                    '<td><input type="checkbox" class="ui checkbox"></td>\n' +
+                    '<td><input type="checkbox" class="ui checkbox my-tbody-checkbox"></td>\n' +
                     '<td>'+ (index + 1) +'</td>\n' +
                     '<td>'+ event.establishTime +'</td>\n' +
                     '<td>'+ event.remindTime +'</td>\n' +
@@ -199,7 +199,21 @@
 
             }
         });
+
+
+        // checkbox全选与全不选功能实现
+        $('.my-thead-checkbox').click(function () {
+            if ($('.my-thead-checkbox').prop('checked') == true) {
+                $('.my-tbody-checkbox').prop('checked', true);
+            } else {
+                $('.my-tbody-checkbox').prop('checked', false);
+            }
+        });
+
+        
     });
+
+
 
 
 
