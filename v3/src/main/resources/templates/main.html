@@ -123,8 +123,14 @@
                             <div class="field">
                                 <div class="ui left icon input">
                                     <i class="hourglass half icon"></i>
-                                    <input type="text" class="layui-input" id="layDate" placeholder="请选择提醒时间(格式化时间格式为yyyy-MM-dd HH:mm:ss)">
+                                    <input type="text" name="newNotifyDate" class="layui-input" id="layDate" placeholder="请选择提醒时间(格式化时间格式为yyyy-MM-dd HH:mm:ss)">
                                 </div>
+                            </div>
+                            <!--验证失败的div-->
+                            <div class="ui error message"></div>
+                            <!--验证成功并且成功将数据存入云端的div-->
+                            <div class="ui success message">
+                                <p>提醒事项创建完成</p>
                             </div>
                             <div class="layui-input-inline">
                                 <div class="ui primary submit button">创建新的条目</div>
@@ -210,7 +216,60 @@
             }
         });
 
-        
+
+        // 辅助函数：获取当前时间并将其格式化
+        function getFormatDate(){
+            var nowDate = new Date();
+            var year = nowDate.getFullYear();
+            var month = nowDate.getMonth() + 1 < 10 ? "0" + (nowDate.getMonth() + 1) : nowDate.getMonth() + 1;
+            var date = nowDate.getDate() < 10 ? "0" + nowDate.getDate() : nowDate.getDate();
+            var hour = nowDate.getHours()< 10 ? "0" + nowDate.getHours() : nowDate.getHours();
+            var minute = nowDate.getMinutes()< 10 ? "0" + nowDate.getMinutes() : nowDate.getMinutes();
+            var second = nowDate.getSeconds()< 10 ? "0" + nowDate.getSeconds() : nowDate.getSeconds();
+            return year + "-" + month + "-" + date+" "+hour+":"+minute+":"+second;
+        }
+
+        // 辅助函数：构建对应后端的event对象
+        function buildEventObj(fields) {
+            return {establishTime: getFormatDate(),
+                    remindTime: fields.newNotifyDate,
+                    content: fields.newNotify,
+                    state: 0};
+        }
+
+        // 辅助函数：对应[创建新的条目]按钮onSuccess()里的ajax请求
+        function ajaxBuildNewNotify(eventJson) {
+            $.ajax({
+                url: '/remindYourself/buildNewNotify',
+                type: 'post',
+                data: eventJson,
+                dataType: 'json', // 如果后端传回来的是json数据,必须指定dataType
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+
+        // 按钮[创建新的条目]点击对应的事件
+        // 按钮[创建新的条目]对应的是[submit]，意思就是这个按钮是[提交表单]的按钮
+        $('.ui.form').form({
+            on: 'blur',
+            fields: {
+                newNotify: {identifier: 'newNotify', rules: [{type: 'empty', prompt: '提醒事项不能为空'}]},
+                newNotifyDate: {identifier: 'newNotifyDate', rules: [{type: 'empty', prompt: '提醒时间不能为空'}]}
+            },
+            onSuccess: function (event, fields) {
+                event.preventDefault(); // 使用ajax提交,防止表单自动提交
+                // fields格式为：{newNotify:'xx', newNotifyDate:'xx'}
+                console.log(fields); // TODO 查看[表单]知识增加一个success message 的div，让其在一段时间内出现
+                // form里面弹出success/warning/error的原理，在<div class='ui form'>上面加上对应的success/warning/error class
+                ajaxBuildNewNotify(buildEventObj(fields));
+
+            }
+        });
     });
 
 
