@@ -52,16 +52,26 @@ public class MainController {
      * remindTime: fields.newNotifyDate,
      * content: fields.newNotify,
      * state: 0};
+     *
+     * 返回的json格式：
+     * {
+     *     res:0/1
+     * }
      */
     @RequestMapping("/buildNewNotify")
     @ResponseBody
-    public String buildNewNotify(@RequestParam("establishTime") String establishTime,
-                               @RequestParam("remindTime") String remindTime,
-                               @RequestParam("content") String content,
-                               @RequestParam("state") Integer state) {
-        log.info("establishTime {}, remindTime {}, content {}, state {}", establishTime, remindTime, content, state);
+    public Map<String, Object> buildNewNotify(@RequestParam("establishTime") String establishTime,
+                                              @RequestParam("remindTime") String remindTime,
+                                              @RequestParam("content") String content,
+                                              @RequestParam("state") Integer state,
+                                              HttpSession session) {
 
-        return "success";
+        User u = (User) session.getAttribute("user");
+        log.info("establishTime {}, remindTime {}, content {}, state {}, for-user-id {}", establishTime, remindTime, content, state, u.getId());
+        int res = eventService.saveEvent(establishTime, remindTime, content, state, Integer.parseInt(u.getId().toString()));
+        Map<String, Object> map = new HashMap<>();
+        map.put("res", res);
+        return map;
     }
 
 }

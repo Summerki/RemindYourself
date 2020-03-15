@@ -12,4 +12,6 @@ public interface EventService {
 
     List<Event> listEventsByForUserId(User user);
 
+    int saveEvent(String establishTime, String remindTime, String content, Integer state, Integer forUserId);
+
 }

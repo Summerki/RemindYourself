@@ -13,4 +13,7 @@ public class EventSQL {
     @Value("${sql.listEventsByForUserId}")
     public String listEventsByForUserIdSQL;
 
+    @Value("${sql.saveEvent}")
+    public String saveEventSQL;
+
 }

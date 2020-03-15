@@ -237,21 +237,44 @@
                     state: 0};
         }
 
+
+        // // 辅助函数：对应[创建新的条目]按钮onSuccess()里的ajax请求
+        // function ajaxBuildNewNotify(eventJson) {
+        //     $.ajax({
+        //         url: '/remindYourself/buildNewNotify',
+        //         type: 'post',
+        //         data: eventJson,
+        //         dataType: 'json', // 如果后端传回来的是json数据,必须指定dataType
+        //         success: function (data) {
+        //             // console.log(data);
+        //
+        //         },
+        //         error: function (data) {
+        //
+        //         }
+        //     });
+        // }
+
         // 辅助函数：对应[创建新的条目]按钮onSuccess()里的ajax请求
+        // 如何拿到ajax异步请求里的数据：https://blog.csdn.net/qq_28817739/article/details/79318667
         function ajaxBuildNewNotify(eventJson) {
+            var defer = $.Deferred();
             $.ajax({
                 url: '/remindYourself/buildNewNotify',
                 type: 'post',
                 data: eventJson,
                 dataType: 'json', // 如果后端传回来的是json数据,必须指定dataType
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
+                    defer.resolve(data);
                 },
                 error: function (data) {
 
                 }
             });
+            return defer.promise();
         }
+
 
         // 按钮[创建新的条目]点击对应的事件
         // 按钮[创建新的条目]对应的是[submit]，意思就是这个按钮是[提交表单]的按钮
@@ -264,10 +287,21 @@
             onSuccess: function (event, fields) {
                 event.preventDefault(); // 使用ajax提交,防止表单自动提交
                 // fields格式为：{newNotify:'xx', newNotifyDate:'xx'}
-                console.log(fields); // TODO 查看[表单]知识增加一个success message 的div，让其在一段时间内出现
-                // form里面弹出success/warning/error的原理，在<div class='ui form'>上面加上对应的success/warning/error class
-                ajaxBuildNewNotify(buildEventObj(fields));
+                console.log(fields);
+                // ajaxBuildNewNotify(buildEventObj(fields));
+                var eventJson = buildEventObj(fields);
+                $.when(ajaxBuildNewNotify(eventJson)).done(function (result) {
+                    console.log(result);
+                    if (result.res == 1) { // 成功
+                        // TODO 1、成功在服务器上插入数据就应该增加一个success message 的div，让其在一段时间内出现
+                        // form里面弹出success/warning/error的原理，在<div class='ui form'>上面加上对应的success/warning/error class
+                        // 2、界面上也要增加刚刚插入的这条数据在表格上
+                        var count = $('.my-tbody-checkbox').length;
+                        $('.my-tbody').append(insertToTbody(count, eventJson));
+                    } else { // 失败
 
+                    }
+                });
             }
         });
     });

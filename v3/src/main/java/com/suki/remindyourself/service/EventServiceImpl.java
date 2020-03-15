@@ -20,4 +20,12 @@ public class EventServiceImpl implements EventService {
     public List<Event> listEventsByForUserId(User user) {
         return eventDao.listEventsByForUserId(user);
     }
+
+    @Override
+    public int saveEvent(String establishTime, String remindTime, String content, Integer state, Integer forUserId) {
+        int res = eventDao.saveEvent(establishTime, remindTime, content, state, forUserId);
+        return res;
+    }
+
+
 }

@@ -35,4 +35,19 @@ public class EventDao {
             throw new MySQLException("查询异常");
         }
     }
+
+    @Transactional(rollbackFor = MySQLException.class)
+    public int saveEvent(String establishTime, String remindTime, String content, Integer state, Integer forUserId) {
+        try {
+            String sql = eventSQL.saveEventSQL;
+            Object[] args = new Object[]{establishTime, remindTime, content, state, forUserId};
+            daoAspect.showSQLInfo(sql, args);
+            int res = jdbcTemplate.update(sql, args);
+            return res;
+        } catch (Exception e) {
+            throw new MySQLException("新增数据异常");
+        }
+    }
 }
+
+
