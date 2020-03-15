@@ -1,5 +1,7 @@
 package com.suki.remindyourself.web;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.suki.remindyourself.po.Event;
 import com.suki.remindyourself.po.User;
 import com.suki.remindyourself.service.EventService;
@@ -24,7 +26,6 @@ public class MainController {
 
     @Autowired
     EventService eventService;
-
 
     /**
      * 返回json数据，格式如下：
@@ -72,6 +73,32 @@ public class MainController {
         Map<String, Object> map = new HashMap<>();
         map.put("res", res);
         return map;
+    }
+
+    /**
+     * 将用户的选择项标记为已完成
+     * 前端json格式：(是一个数组字符串)
+     * {
+     *     markupJsonArr: [
+     *          {establishTime:xx, remindTime:xx, content:xx, state:0/1},
+     *          {establishTime:xx, remindTime:xx, content:xx, state:0/1},
+     *          ...
+     *     ]
+     * }
+     * @return
+     */
+    @RequestMapping("/markup")
+    @ResponseBody
+    public String markup(@RequestParam("markupJsonArr") String markupStr) {
+        log.info("markupJsonArr = {}",markupStr);
+        JSONArray markupJsonArr = (JSONArray) JSONArray.parse(markupStr);
+
+        JSONObject jsonObject;
+        for (int i = 0; i < markupJsonArr.size(); i++) {
+            jsonObject = (JSONObject) markupJsonArr.get(i);
+            // TODO 这里拿到每个jsonobject后就可以batchupdate了
+        }
+        return "success";
     }
 
 }

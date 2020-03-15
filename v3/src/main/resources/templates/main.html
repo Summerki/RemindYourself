@@ -134,8 +134,8 @@
                             </div>
                             <div class="layui-input-inline">
                                 <div class="ui primary submit button">创建新的条目</div>
-                                <div class="ui green button">标记为已完成</div>
-                                <div class="ui red button">删除选中条目</div>
+                                <div class="ui green button my-markup-btn">标记为已完成</div>
+                                <div class="ui red button my-delete-btn">删除选中条目</div>
                             </div>
                         </div>
                     </div>
@@ -166,20 +166,20 @@
             if (event.state == 0) { // 0代表该事件正在进行中
                 return '<tr class="positive">\n' +
                 '<td><input type="checkbox" class="ui checkbox my-tbody-checkbox"></td>\n' +
-                '<td>'+ (index + 1) +'</td>\n' +
-                '<td>'+ event.establishTime +'</td>\n' +
-                '<td>'+ event.remindTime +'</td>\n' +
-                '<td>'+ event.content +'</td>\n' +
-                '<td>进行中</td>\n' +
+                '<td class="my-tbody-index">'+ (index + 1) +'</td>\n' +
+                '<td class="my-tbody-establishTime">'+ event.establishTime +'</td>\n' +
+                '<td class="my-tbody-remindTime">'+ event.remindTime +'</td>\n' +
+                '<td class="my-tbody-content">'+ event.content +'</td>\n' +
+                '<td class="my-tbody-state">进行中</td>\n' +
                 ' </tr>';
             } else {
                 return '<tr class="negative">\n' +
-                    '<td><input type="checkbox" class="ui checkbox my-tbody-checkbox"></td>\n' +
+                    '<td class="my-tbody-index"><input type="checkbox" class="ui checkbox my-tbody-checkbox"></td>\n' +
                     '<td>'+ (index + 1) +'</td>\n' +
-                    '<td>'+ event.establishTime +'</td>\n' +
-                    '<td>'+ event.remindTime +'</td>\n' +
-                    '<td>'+ event.content +'</td>\n' +
-                    '<td>已完成</td>\n' +
+                    '<td class="my-tbody-establishTime">'+ event.establishTime +'</td>\n' +
+                    '<td class="my-tbody-remindTime">'+ event.remindTime +'</td>\n' +
+                    '<td class="my-tbody-content">'+ event.content +'</td>\n' +
+                    '<td class="my-tbody-state">已完成</td>\n' +
                     ' </tr>';
             }
         }
@@ -303,6 +303,55 @@
                     }
                 });
             }
+        });
+
+
+        // [标记为已完成]按钮辅助函数
+        function buildMarkupJson(trNode) {
+            var establishTime = trNode.find('.my-tbody-establishTime').text();
+            var remindTime = trNode.find('.my-tbody-remindTime').text();
+            var content = trNode.find('.my-tbody-content').text();
+            var state = trNode.find('.my-tbody-state').text() == '进行中' ? 0 : 1;
+            return {establishTime: establishTime,
+                    remindTime: remindTime,
+                    content: content,
+                    state: state};
+        }
+
+        // [标记为已完成]按钮的ajax请求
+        function ajaxMarkup(markupJsonArr) {
+            $.ajax({
+                url: '/remindYourself/markup',
+                type: 'post',
+                data: {markupJsonArr: JSON.stringify(markupJsonArr)},
+                dataType: 'json', // 如果后端传回来的是json数据,必须指定dataType
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (data) {
+
+                }
+            });
+        }
+
+        // [标记为已完成]按钮点击事件
+        $('.my-markup-btn').click(function () {
+            // var my_tbody_checkbox = $('.my-tbody-checkbox');
+            // console.log(my_tbody_checkbox);
+            // $.each(my_tbody_checkbox, function (index, value) {
+            //    if (my_tbody_checkbox.eq(index).prop("checked") == true) {
+            //        console.log("index=" + index + 1 + " value=" + value);
+            //    }
+            // });
+            var markupJsonArr = new Array();
+            var markupJson;
+            $.each($('input[type="checkbox"]:checked'), function (index, value) {
+                // console.log($(value).parent().parent());
+                markupJson = buildMarkupJson($(value).parent().parent());
+                markupJsonArr.push(markupJson);
+            });
+            console.log(markupJsonArr);
+            ajaxMarkup(markupJsonArr);
         });
     });
 
