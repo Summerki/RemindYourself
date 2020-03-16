@@ -48,5 +48,24 @@ public class EventServiceImpl implements EventService {
         return res;
     }
 
+    @Override
+    public int[] removeEvents(JSONArray deleteJsonArr, int forUserId) {
+        // 利用deleteJsonArr和forUserId构造批量删除的数组
+        List<Object[]> sqlArgList = new ArrayList<>();
+        JSONObject jsonObject;
+        Object[] sqlArg;
+        for (int i = 0; i < deleteJsonArr.size(); i++) {
+            jsonObject = (JSONObject) deleteJsonArr.get(i);
+            sqlArg = new Object[]{jsonObject.getString("establishTime"),
+                                  jsonObject.getString("remindTime"),
+                                  jsonObject.getString("content"),
+                                  jsonObject.getInteger("state"),
+                                  forUserId};
+            sqlArgList.add(sqlArg);
+        }
+        int[] res = eventDao.removeEvents(sqlArgList);
+        return res;
+    }
+
 
 }

@@ -174,8 +174,8 @@
                 ' </tr>';
             } else {
                 return '<tr class="negative">\n' +
-                    '<td class="my-tbody-index"><input type="checkbox" class="ui checkbox my-tbody-checkbox"></td>\n' +
-                    '<td>'+ (index + 1) +'</td>\n' +
+                    '<td><input type="checkbox" class="ui checkbox my-tbody-checkbox"></td>\n' +
+                    '<td class="my-tbody-index">'+ (index + 1) +'</td>\n' +
                     '<td class="my-tbody-establishTime">'+ event.establishTime +'</td>\n' +
                     '<td class="my-tbody-remindTime">'+ event.remindTime +'</td>\n' +
                     '<td class="my-tbody-content">'+ event.content +'</td>\n' +
@@ -347,7 +347,7 @@
             // });
             var markupJsonArr = new Array();
             var markupJson;
-            $.each($('input[type="checkbox"]:checked'), function (index, value) {
+            $.each($('input[class="ui checkbox my-tbody-checkbox"][type="checkbox"]:checked'), function (index, value) {
                 // console.log($(value).parent().parent());
                 markupJson = buildMarkupJson($(value).parent().parent());
                 markupJsonArr.push(markupJson);
@@ -357,7 +357,7 @@
                 console.log(result);
                 if (result.res == 'success') { // 批量修改成功
                     // 将界面上选中的那些元素状态改为[已完成] // 记得要把tr的class由positive改为negative
-                    $.each($('input[type="checkbox"]:checked'), function (index, value) {
+                    $.each($('input[class="ui checkbox my-tbody-checkbox"][type="checkbox"]:checked'), function (index, value) {
                         $(value).parent().parent().removeClass('positive').addClass('negative');
                         $(value).parent().parent().find('.my-tbody-state').text('已完成');
                     });
@@ -365,52 +365,53 @@
             });
         });
 
-        
-    });
 
+        // [删除选中条目]按钮的ajax请求
+        function ajaxDelete(deleteJsonArr) {
+            var defer = $.Deferred();
+            $.ajax({
+                url: '/remindYourself/delete',
+                type: 'post',
+                data: {deleteJsonArr: JSON.stringify(deleteJsonArr)},
+                dataType: 'json',
+                success: function (data) {
+                    defer.resolve(data);
+                },
+                error: function (data) {
 
-
-
-
-
-
-
-
-
-
-
-
-    //================================================隔离
-    var selectTime;
-    var selectValue;
-    var isSelect = false;
-    layui.use(['laydate', 'element'], function () {
-        var laydate = layui.laydate;
-        var element = layui.element; // 二级菜单需要依赖element模块
-
-        // 执行一个laydate实例
-        //日期时间选择器
-        laydate.render({
-            elem: '#layDate',
-            type: 'datetime',
-            done: function (value, date, endDate) {
-                console.log('1-->' + value);
-                console.log('2-->' + JSON.stringify(date));
-                selectValue = value;
-                selectTime = date;
-                isSelect = true;
-            }
-        });
-    });
-
-
-    $('.submit').click(function () {
-        if (isSelect) {
-            console.log('3-->' + selectValue);
-            console.log('4-->' + JSON.stringify(selectTime));
+                }
+            });
+            return defer.promise();
         }
-    });
 
+        // [删除选中条目]按钮事件
+        $('.my-delete-btn').click(function () {
+            var deleteJsonArr = new Array();
+            var deleteJson;
+            $.each($('input[class="ui checkbox my-tbody-checkbox"][type="checkbox"]:checked'), function (index, value) {
+                // console.log($(value).parent().parent());
+                deleteJson = buildMarkupJson($(value).parent().parent());
+                deleteJsonArr.push(deleteJson);
+            });
+            console.log(deleteJsonArr);
+            $.when(ajaxDelete(deleteJsonArr)).done(function (result) {
+                console.log(result);
+                if (result.res == 'success') { // 后台删除操作成功
+                    // 界面上删除对应的tr
+                    $.each($('input[class="ui checkbox my-tbody-checkbox"][type="checkbox"]:checked'), function (index, value) {
+                        $(value).parent().parent().remove();
+                    });
+                    // 重新排序剩下的tr的index
+                    $.each($('td[class="my-tbody-index"]'), function (index, value) {
+                        $(value).text(index + 1);
+                    });
+                }
+            });
+        });
+
+
+
+    });
 </script>
 
 </body>

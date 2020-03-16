@@ -16,4 +16,6 @@ public interface EventService {
     int saveEvent(String establishTime, String remindTime, String content, Integer state, Integer forUserId);
 
     int[] updateEventState(JSONArray jsonArray, Integer forUserId);
+
+    int[] removeEvents(JSONArray deleteJsonArr, int forUserId);
 }

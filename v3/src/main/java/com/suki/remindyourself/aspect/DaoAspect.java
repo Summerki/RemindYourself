@@ -52,6 +52,6 @@ public class DaoAspect {
      * @param sqlArgList
      */
     public void showSQLInfo(String sql, List<Object[]> sqlArgList) {
-        log.info("执行的sql语句:{},执行的sql语句的参数为:{}", sql, sqlArgList);
+        log.info("执行的sql语句:{},执行的sql语句的参数为:{}", sql, sqlArgList.toString());
     }
 }

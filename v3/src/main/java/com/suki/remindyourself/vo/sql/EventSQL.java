@@ -19,4 +19,6 @@ public class EventSQL {
     @Value("${sql.updateEventState}")
     public String updateEventState;
 
+    @Value("${sql.removeEvents}")
+    public String removeEvents;
 }

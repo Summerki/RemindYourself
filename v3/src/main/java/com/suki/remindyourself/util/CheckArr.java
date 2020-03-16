@@ -8,6 +8,9 @@ public class CheckArr {
      * @return
      */
     public static boolean checkArr(int[] arr, int targrt) {
+        if (arr.length == 0 || arr == null) {
+            return false;
+        }
         for (int item : arr) {
             if (item != targrt) return false;
         }

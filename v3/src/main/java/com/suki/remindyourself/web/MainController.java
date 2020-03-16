@@ -100,9 +100,26 @@ public class MainController {
         User u =  (User) session.getAttribute("user");
         // 如果执行成功这个数组里面应该都是1
         int[] res = eventService.updateEventState(markupJsonArr, Integer.parseInt(u.getId().toString()));
-        log.info("res {}", res);
         Map<String, Object> map = new HashMap<>();
         if (CheckArr.checkArr(res, 1)) { // 判断数组结果是否为全1
+            map.put("res", "success");
+        } else {
+            map.put("res", "fail");
+        }
+        return map;
+    }
+
+    @RequestMapping("/delete")
+    @ResponseBody
+    public Map<String, Object> delete(@RequestParam("deleteJsonArr")String deleteJsonStr,
+                                      HttpSession session) {
+        log.info("deleteStr {}", deleteJsonStr);
+        JSONArray deleteJsonArr = (JSONArray) JSONArray.parse(deleteJsonStr);
+        User u = (User) session.getAttribute("user");
+        int[] res = eventService.removeEvents(deleteJsonArr, Integer.parseInt(u.getId().toString()));
+//        log.info("delete res {}", res);
+        Map<String, Object> map = new HashMap<>();
+        if (CheckArr.checkArr(res, 1)) {
             map.put("res", "success");
         } else {
             map.put("res", "fail");

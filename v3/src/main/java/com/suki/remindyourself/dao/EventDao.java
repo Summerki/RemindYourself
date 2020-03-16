@@ -60,6 +60,18 @@ public class EventDao {
             throw new MySQLException("批量更新出错");
         }
     }
+
+    @Transactional(rollbackFor = MySQLException.class)
+    public int[] removeEvents(List<Object[]> sqlArgList) {
+        try {
+            String sql = eventSQL.removeEvents;
+            daoAspect.showSQLInfo(sql, sqlArgList);
+            int[] res = jdbcTemplate.batchUpdate(sql, sqlArgList);
+            return res;
+        } catch (Exception e) {
+            throw new MySQLException("批量删除出错");
+        }
+    }
 }
 
 
