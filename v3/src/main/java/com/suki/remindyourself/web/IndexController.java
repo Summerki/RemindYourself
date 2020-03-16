@@ -1,5 +1,6 @@
 package com.suki.remindyourself.web;
 
+import com.suki.remindyourself.util.CheckUserAgentUtils;
 import com.suki.remindyourself.vo.ErrorVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -17,13 +18,27 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class IndexController {
 
+    @RequestMapping("/")
+    public String index(HttpServletRequest request) {
+        if (CheckUserAgentUtils.checkAgentIsMobile(request.getHeader("user-agent"))) {
+            return "mobile/index.m";
+        }
+        return "index";
+    }
+
     @GetMapping("/login")
-    public String login() {
+    public String login(HttpServletRequest request) {
+        if (CheckUserAgentUtils.checkAgentIsMobile(request.getHeader("user-agent"))) {
+            return "mobile/login.m";
+        }
         return "login";
     }
 
     @GetMapping("/register")
-    public String register() {
+    public String register(HttpServletRequest request) {
+        if (CheckUserAgentUtils.checkAgentIsMobile(request.getHeader("user-agent"))) {
+            return "mobile/register.m";
+        }
         return "register";
     }
 

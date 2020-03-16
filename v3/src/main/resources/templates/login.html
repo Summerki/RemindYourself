@@ -62,7 +62,7 @@
                 </form>
 
                 <div class="ui message">
-                    新用户？ <a href="register.html">注册</a>
+                    新用户？ <a href="register.html" th:href="@{/register}" target="_self">注册</a>
                 </div>
             </div>
         </div>
@@ -100,7 +100,7 @@
                     if (data.status == 'ok') { // 查到有此人
                         window.location.href = '/remindYourself/main';
                     } else {
-                        ajaxFailToMain();
+                        failLogin('<p>账号或密码错误!</p>');
                     }
 
                 },
@@ -111,9 +111,15 @@
         };
 
 
-        // 将数据提交后台验证失败后的 ajax
-        function ajaxFailToMain() {
-
+        // 将数据提交后台验证失败的辅助函数
+        function failLogin(errorInfo) {
+            $('.ui.error.message').html(errorInfo);
+            $('.ui.large.form').addClass('error');
+            setTimeout(function () {
+                $('.ui.large.form').removeClass('error');
+                $('.ui.error.message').empty();
+                $('input[name="password"]').val("");
+            }, 3000);
         }
     });
 </script>

@@ -26,7 +26,7 @@ public class UserDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    @Transactional(rollbackFor = MySQLException.class)
+
     public User getUserByUsernameAndPassword(String username, String password) {
         try {
             String sql = userSQL.getUserByUsernameAndPasswordSQL;
@@ -34,7 +34,7 @@ public class UserDao {
             User user = jdbcTemplate.queryForObject(sql, new User(), username, password);
             return user;
         } catch (Exception e) {
-            throw new MySQLException("查询异常");
+            return null;
         }
     }
 

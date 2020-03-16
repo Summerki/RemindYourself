@@ -50,7 +50,7 @@
                 <li class="layui-nav-item layui-layout-right">
                     <a href="javascript:;">summerki</a>
                     <dl class="layui-nav-child">
-                        <a href="javascript:;">注销登录</a>
+                        <a href="javascript:;" th:href="@{/index}">注销登录</a>
                     </dl>
                 </li>
             </ul>
@@ -61,7 +61,7 @@
                     <table class="ui selectable celled small very compact unstackable table">
                         <thead class="center aligned middle aligned">
                             <tr>
-                                <th><input type="checkbox" class="ui checkbox"></th>
+                                <th><input type="checkbox" class="ui checkbox my-thead-checkbox"></th>
                                 <th>条目</th>
                                 <th>创建时间</th>
                                 <th>提醒时间</th>
@@ -69,31 +69,31 @@
                                 <th>事件状态</th>
                             </tr>
                         </thead>
-                        <tbody class="center aligned middle aligned">
-                            <tr class="negative">
-                                <td><input type="checkbox" class="ui checkbox"></td>
-                                <td>1</td>
-                                <td>2020-02-29 16:12:00</td>
-                                <td>2020-02-29 16:12:01</td>
-                                <td>Test</td>
-                                <td>以完成</td>
-                            </tr>
-                            <tr class="positive">
-                                <td><input type="checkbox" class="ui checkbox"></td>
-                                <td>1</td>
-                                <td>2020-02-29 16:12:00</td>
-                                <td>2020-02-29 16:12:01</td>
-                                <td>Test</td>
-                                <td>进行中</td>
-                            </tr>
-                            <tr class="positive">
-                                <td><input type="checkbox" class="ui checkbox"></td>
-                                <td>1</td>
-                                <td>2020-02-29 16:12:00</td>
-                                <td>2020-02-29 16:12:01</td>
-                                <td>Test长的空间和附件是肯定回复可见沙克但是发射点发啊但是</td>
-                                <td>进行中</td>
-                            </tr>
+                        <tbody class="center aligned middle aligned my-tbody">
+                            <!--<tr class="negative">-->
+                                <!--<td><input type="checkbox" class="ui checkbox"></td>-->
+                                <!--<td>1</td>-->
+                                <!--<td>2020-02-29 16:12:00</td>-->
+                                <!--<td>2020-02-29 16:12:01</td>-->
+                                <!--<td>Test</td>-->
+                                <!--<td>以完成</td>-->
+                            <!--</tr>-->
+                            <!--<tr class="positive">-->
+                                <!--<td><input type="checkbox" class="ui checkbox"></td>-->
+                                <!--<td>1</td>-->
+                                <!--<td>2020-02-29 16:12:00</td>-->
+                                <!--<td>2020-02-29 16:12:01</td>-->
+                                <!--<td>Test</td>-->
+                                <!--<td>进行中</td>-->
+                            <!--</tr>-->
+                            <!--<tr class="positive">-->
+                                <!--<td><input type="checkbox" class="ui checkbox"></td>-->
+                                <!--<td>1</td>-->
+                                <!--<td>2020-02-29 16:12:00</td>-->
+                                <!--<td>2020-02-29 16:12:01</td>-->
+                                <!--<td>Test长的空间和附件是肯定回复可见沙克但是发射点发啊但是</td>-->
+                                <!--<td>进行中</td>-->
+                            <!--</tr>-->
                         </tbody>
                     </table>
                 </div>
@@ -112,13 +112,22 @@
                         <div class="field">
                             <div class="ui left icon input">
                                 <i class="hourglass half icon"></i>
-                                <input type="text" class="layui-input" id="layDate" placeholder="请选择提醒时间(格式化时间格式为yyyy-MM-dd HH:mm:ss)">
+                                <input type="text" name="newNotifyDate" class="layui-input" id="layDate" placeholder="请选择提醒时间(格式化时间格式为yyyy-MM-dd HH:mm:ss)">
                             </div>
                         </div>
+
+                        <!--验证失败的div-->
+                        <div class="ui error message"></div>
+
+                        <!--验证成功并且成功将数据存入云端的div-->
+                        <div class="ui my-success-msg">
+                            <!--<p>提醒事项创建完成</p>-->
+                        </div>
+
                         <div class="layui-input-inline">
                             <div class="ui mini primary submit basic button">创建新的条目</div>
-                            <div class="ui mini green basic button">标记为已完成</div>
-                            <div class="ui mini red basic button">删除选中条目</div>
+                            <div class="ui mini green basic button my-markup-btn">标记为已完成</div>
+                            <div class="ui mini red basic button my-delete-btn">删除选中条目</div>
                         </div>
                     </div>
                 </div>
@@ -140,43 +149,294 @@
 <script src="../../static/js/semantic.min.js" th:src="@{/js/semantic.min.js}"></script>
 <script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
 
-<script>
-    var selectTime;
-    var selectValue;
-    var isSelect = false;
-    layui.use(['laydate', 'element'], function () {
-        var laydate = layui.laydate;
-        var element = layui.element; // 二级菜单需要依赖element模块
+    <script>
+        $(document).ready(function () {
 
-        // 执行一个laydate实例
-        //日期时间选择器
-        laydate.render({
-            elem: '#layDate',
-            type: 'datetime',
-            done: function (value, date, endDate) {
-                console.log('1-->' + value);
-                console.log('2-->' + JSON.stringify(date));
-                selectValue = value;
-                selectTime = date;
-                isSelect = true;
+            // 辅助函数，[创建新的条目][标记为已完成][删除选中条目]操作成功时弹出的success提示框
+            // form里面弹出success/warning/error的原理，在<div class='ui form'>上面加上对应的success/warning/error class
+            function showSuccessInfo(info) {
+                // 向.my-success-msg这个div上加上success类
+                $('.my-success-msg').addClass('message').addClass('success');
+                // 在里面加入提示信息
+                $('.my-success-msg').html(info);
+                // 向ui、form上加上success类
+                $('.ui.form').addClass('success');
+                // 3秒后清除上面加的东西
+                setTimeout(function () {
+                    $('.ui.form').removeClass('success');
+                    $('.my-success-msg').empty();
+                    $('.my-success-msg').removeClass('success').removeClass('message');
+                }, 3000);
             }
+
+
+            // 填充table的辅助函数
+            function insertToTbody(index, event) {
+                if (event.state == 0) { // 0代表该事件正在进行中
+                    return '<tr class="positive">\n' +
+                        '<td><input type="checkbox" class="ui checkbox my-tbody-checkbox"></td>\n' +
+                        '<td class="my-tbody-index">'+ (index + 1) +'</td>\n' +
+                        '<td class="my-tbody-establishTime">'+ event.establishTime +'</td>\n' +
+                        '<td class="my-tbody-remindTime">'+ event.remindTime +'</td>\n' +
+                        '<td class="my-tbody-content">'+ event.content +'</td>\n' +
+                        '<td class="my-tbody-state">进行中</td>\n' +
+                        ' </tr>';
+                } else {
+                    return '<tr class="negative">\n' +
+                        '<td><input type="checkbox" class="ui checkbox my-tbody-checkbox"></td>\n' +
+                        '<td class="my-tbody-index">'+ (index + 1) +'</td>\n' +
+                        '<td class="my-tbody-establishTime">'+ event.establishTime +'</td>\n' +
+                        '<td class="my-tbody-remindTime">'+ event.remindTime +'</td>\n' +
+                        '<td class="my-tbody-content">'+ event.content +'</td>\n' +
+                        '<td class="my-tbody-state">已完成</td>\n' +
+                        ' </tr>';
+                }
+            }
+
+
+            /*
+            * main.html 开始就要加载的ajax函数
+            * 获取[user]和该user对应的[events]数组
+            * */
+            $.ajax({
+                url: '/remindYourself/getUserAndEvents',
+                type: 'post',
+                // data: value,
+                dataType: 'json', // 如果后端传回来的是json数据,必须指定dataType
+                success: function (data) {
+                    console.log(data);
+                    $('.username').text(data.user.username);
+                    $.each(data.events, function (index, value) { // index从0开始
+                        $('.my-tbody').append(insertToTbody(index, value));
+                    });
+                },
+                error: function (data) {
+
+                }
+            });
+
+
+            // checkbox全选与全不选功能实现
+            $('.my-thead-checkbox').click(function () {
+                if ($('.my-thead-checkbox').prop('checked') == true) {
+                    $('.my-tbody-checkbox').prop('checked', true);
+                } else {
+                    $('.my-tbody-checkbox').prop('checked', false);
+                }
+            });
+
+
+            // 辅助函数：获取当前时间并将其格式化
+            function getFormatDate(){
+                var nowDate = new Date();
+                var year = nowDate.getFullYear();
+                var month = nowDate.getMonth() + 1 < 10 ? "0" + (nowDate.getMonth() + 1) : nowDate.getMonth() + 1;
+                var date = nowDate.getDate() < 10 ? "0" + nowDate.getDate() : nowDate.getDate();
+                var hour = nowDate.getHours()< 10 ? "0" + nowDate.getHours() : nowDate.getHours();
+                var minute = nowDate.getMinutes()< 10 ? "0" + nowDate.getMinutes() : nowDate.getMinutes();
+                var second = nowDate.getSeconds()< 10 ? "0" + nowDate.getSeconds() : nowDate.getSeconds();
+                return year + "-" + month + "-" + date+" "+hour+":"+minute+":"+second;
+            }
+
+            // 辅助函数：构建对应后端的event对象
+            function buildEventObj(fields) {
+                return {establishTime: getFormatDate(),
+                    remindTime: fields.newNotifyDate,
+                    content: fields.newNotify,
+                    state: 0};
+            }
+
+
+            // // 辅助函数：对应[创建新的条目]按钮onSuccess()里的ajax请求
+            // function ajaxBuildNewNotify(eventJson) {
+            //     $.ajax({
+            //         url: '/remindYourself/buildNewNotify',
+            //         type: 'post',
+            //         data: eventJson,
+            //         dataType: 'json', // 如果后端传回来的是json数据,必须指定dataType
+            //         success: function (data) {
+            //             // console.log(data);
+            //
+            //         },
+            //         error: function (data) {
+            //
+            //         }
+            //     });
+            // }
+
+            // 辅助函数：对应[创建新的条目]按钮onSuccess()里的ajax请求
+            // 如何拿到ajax异步请求里的数据：https://blog.csdn.net/qq_28817739/article/details/79318667
+            function ajaxBuildNewNotify(eventJson) {
+                var defer = $.Deferred();
+                $.ajax({
+                    url: '/remindYourself/buildNewNotify',
+                    type: 'post',
+                    data: eventJson,
+                    dataType: 'json', // 如果后端传回来的是json数据,必须指定dataType
+                    success: function (data) {
+                        // console.log(data);
+                        defer.resolve(data);
+                    },
+                    error: function (data) {
+
+                    }
+                });
+                return defer.promise();
+            }
+
+
+            // 按钮[创建新的条目]点击对应的事件
+            // 按钮[创建新的条目]对应的是[submit]，意思就是这个按钮是[提交表单]的按钮
+            $('.ui.form').form({
+                on: 'blur',
+                fields: {
+                    newNotify: {identifier: 'newNotify', rules: [{type: 'empty', prompt: '提醒事项不能为空'}]},
+                    newNotifyDate: {identifier: 'newNotifyDate', rules: [{type: 'empty', prompt: '提醒时间不能为空'}]}
+                },
+                onSuccess: function (event, fields) {
+                    event.preventDefault(); // 使用ajax提交,防止表单自动提交
+                    // fields格式为：{newNotify:'xx', newNotifyDate:'xx'}
+                    console.log(fields);
+                    // ajaxBuildNewNotify(buildEventObj(fields));
+                    var eventJson = buildEventObj(fields);
+                    $.when(ajaxBuildNewNotify(eventJson)).done(function (result) {
+                        console.log(result);
+                        if (result.res == 1) { // 成功
+                            // 2、界面上也要增加刚刚插入的这条数据在表格上
+                            var count = $('.my-tbody-checkbox').length;
+                            $('.my-tbody').append(insertToTbody(count, eventJson));
+
+                            showSuccessInfo('<p>新增提醒事项成功</p>');
+                        } else { // 失败
+
+                        }
+                    });
+                }
+            });
+
+
+            // [标记为已完成]按钮辅助函数
+            function buildMarkupJson(trNode) {
+                var establishTime = trNode.find('.my-tbody-establishTime').text();
+                var remindTime = trNode.find('.my-tbody-remindTime').text();
+                var content = trNode.find('.my-tbody-content').text();
+                var state = trNode.find('.my-tbody-state').text() == '进行中' ? 0 : 1;
+                return {establishTime: establishTime,
+                    remindTime: remindTime,
+                    content: content,
+                    state: state};
+            }
+
+            // [标记为已完成]按钮的ajax请求
+            function ajaxMarkup(markupJsonArr) {
+                var defer = $.Deferred();
+                $.ajax({
+                    url: '/remindYourself/markup',
+                    type: 'post',
+                    data: {markupJsonArr: JSON.stringify(markupJsonArr)},
+                    dataType: 'json', // 如果后端传回来的是json数据,必须指定dataType
+                    success: function (data) {
+                        defer.resolve(data);
+                    },
+                    error: function (data) {
+
+                    }
+                });
+                return defer.promise();
+            }
+
+            // [标记为已完成]按钮点击事件
+            $('.my-markup-btn').click(function () {
+                // var my_tbody_checkbox = $('.my-tbody-checkbox');
+                // console.log(my_tbody_checkbox);
+                // $.each(my_tbody_checkbox, function (index, value) {
+                //    if (my_tbody_checkbox.eq(index).prop("checked") == true) {
+                //        console.log("index=" + index + 1 + " value=" + value);
+                //    }
+                // });
+                var markupJsonArr = new Array();
+                var markupJson;
+                $.each($('input[class="ui checkbox my-tbody-checkbox"][type="checkbox"]:checked'), function (index, value) {
+                    // console.log($(value).parent().parent());
+                    markupJson = buildMarkupJson($(value).parent().parent());
+                    markupJsonArr.push(markupJson);
+                });
+                console.log(markupJsonArr);
+                $.when(ajaxMarkup(markupJsonArr)).done(function (result) {
+                    console.log(result);
+                    if (result.res == 'success') { // 批量修改成功
+                        // 将界面上选中的那些元素状态改为[已完成] // 记得要把tr的class由positive改为negative
+                        $.each($('input[class="ui checkbox my-tbody-checkbox"][type="checkbox"]:checked'), function (index, value) {
+                            $(value).parent().parent().removeClass('positive').addClass('negative');
+                            $(value).parent().parent().find('.my-tbody-state').text('已完成');
+                        });
+                        showSuccessInfo('<p>标记为已完成操作成功</p>');
+                    }
+                });
+            });
+
+
+            // [删除选中条目]按钮的ajax请求
+            function ajaxDelete(deleteJsonArr) {
+                var defer = $.Deferred();
+                $.ajax({
+                    url: '/remindYourself/delete',
+                    type: 'post',
+                    data: {deleteJsonArr: JSON.stringify(deleteJsonArr)},
+                    dataType: 'json',
+                    success: function (data) {
+                        defer.resolve(data);
+                    },
+                    error: function (data) {
+
+                    }
+                });
+                return defer.promise();
+            }
+
+            // [删除选中条目]按钮事件
+            $('.my-delete-btn').click(function () {
+                var deleteJsonArr = new Array();
+                var deleteJson;
+                $.each($('input[class="ui checkbox my-tbody-checkbox"][type="checkbox"]:checked'), function (index, value) {
+                    // console.log($(value).parent().parent());
+                    deleteJson = buildMarkupJson($(value).parent().parent());
+                    deleteJsonArr.push(deleteJson);
+                });
+                console.log(deleteJsonArr);
+                $.when(ajaxDelete(deleteJsonArr)).done(function (result) {
+                    console.log(result);
+                    if (result.res == 'success') { // 后台删除操作成功
+                        // 界面上删除对应的tr
+                        $.each($('input[class="ui checkbox my-tbody-checkbox"][type="checkbox"]:checked'), function (index, value) {
+                            $(value).parent().parent().remove();
+                        });
+                        // 重新排序剩下的tr的index
+                        $.each($('td[class="my-tbody-index"]'), function (index, value) {
+                            $(value).text(index + 1);
+                        });
+                        showSuccessInfo('<p>删除提醒事项成功</p>');
+                    }
+                });
+            });
+
+
+
         });
+    </script>
+    <script>
+        // 用于实例化layui-date
+        layui.use(['laydate', 'element'], function () {
+            var laydate = layui.laydate;
+            var element = layui.element;
 
-        // 监听点击事件
-        element.on('nav(my-mobile-nav)', function (elem) {
-            console.log(elem[0].text); // 测试,拿到每次点击的选项的text
-        });
-    });
-
-
-    $('.submit').click(function () {
-        if (isSelect) {
-            console.log('3-->' + selectValue);
-            console.log('4-->' + JSON.stringify(selectTime));
-        }
-    });
-
-</script>
+            // 执行一个layui-date实例
+            laydate.render({
+                elem: '#layDate',
+                type: 'datetime'
+            });
+        })
+    </script>
 
 </body>
 </html>

@@ -57,7 +57,7 @@
 
             <div class="ui message">
                 <!--这里先用相对路径实现跳转,以后a标签的href属性可以直接写网址的全称,这样可以实现后缀没有.html-->
-                新用户？ <a href="register.m.html" target="_self">注册</a>
+                新用户？ <a href="register.m.html" target="_self" th:href="@{/register}">注册</a>
             </div>
         </div>
     </div>
@@ -70,14 +70,34 @@
 <script src="../../static/js/semantic.min.js" th:src="@{/js/semantic.min.js}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        $('.ui.form').form({
+            on: 'blur',
+            fields: {
+                username: {identifier: 'username', rules: [{type: 'empty', prompt: '用户名不能为空'}]},
+                password: {identifier: 'password', rules: [{type: 'empty', prompt: '密码不能为空'}]}
+            },
+            onSuccess: function (event, fields) { // 表单验证通过后调用onSuccess函数
+                event.preventDefault(); // 使用ajax提交,防止表单自动提交
+                // fields里面包含了所有的表单数据;如{username: 'suki', password: '123'}
+                // console.log(fields);
+                ajaxValidate(fields);
+            }
+        });
+
         // 表单提交到服务器的ajax请求函数
         function ajaxValidate(value) {
             $.ajax({
-                url: '/remindYouself/login',
+                url: '/remindYourself/checkUser',
                 type: 'post',
                 data: value,
                 dataType: 'json', // 如果后端传回来的是json数据,必须指定dataType
                 success: function (data) {
+                    console.log(data);
+                    if (data.status == 'ok') { // 查到有此人
+                        window.location.href = '/remindYourself/main';
+                    } else {
+                        failLogin('<p>账号或密码错误!</p>');
+                    }
 
                 },
                 error: function (data) {
@@ -86,18 +106,17 @@
             });
         };
 
-       $('.ui.form').form({
-           on: 'blur',
-           fields: {
-               username: {identifier: 'username', rules: [{type: 'empty', prompt: '用户名不能为空'}]},
-               password: {identifier: 'password', rules: [{type: 'empty', prompt: '密码不能为空'}]}
-           },
-           onSuccess: function (event, fields) { // 表单验证通过后调用onSuccess函数
-               event.preventDefault(); // 使用ajax提交,防止表单自动提交
-               // fields里面包含了所有的表单数据;如{username: 'suki', password: '123'}
-                ajaxValidate(fields);
-           }
-       });
+
+        // 将数据提交后台验证失败的辅助函数
+        function failLogin(errorInfo) {
+            $('.ui.error.message').html(errorInfo);
+            $('.ui.large.form').addClass('error');
+            setTimeout(function () {
+                $('.ui.large.form').removeClass('error');
+                $('.ui.error.message').empty();
+                $('input[name="password"]').val("");
+            }, 3000);
+        }
     });
 </script>
 </body>

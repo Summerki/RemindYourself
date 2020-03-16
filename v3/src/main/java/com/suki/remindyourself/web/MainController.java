@@ -5,6 +5,7 @@ import com.suki.remindyourself.po.Event;
 import com.suki.remindyourself.po.User;
 import com.suki.remindyourself.service.EventService;
 import com.suki.remindyourself.util.CheckArrUtils;
+import com.suki.remindyourself.util.CheckUserAgentUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -129,8 +131,11 @@ public class MainController {
 
 
     @RequestMapping("/index")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session, HttpServletRequest request) {
         session.invalidate();
+        if (CheckUserAgentUtils.checkAgentIsMobile(request.getHeader("user-agent"))) {
+            return "mobile/index.m";
+        }
         return "index";
     }
 }
