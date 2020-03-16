@@ -1,7 +1,7 @@
 package com.suki.remindyourself.po;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.suki.remindyourself.util.BeanUtil;
+import com.suki.remindyourself.util.BeanUtils;
 import com.suki.remindyourself.vo.table.EventTable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -46,7 +46,7 @@ public class Event implements RowMapper<Event> {
 
     @Override
     public Event mapRow(ResultSet resultSet, int i) throws SQLException {
-        EventTable eventTable = BeanUtil.getBean(EventTable.class);
+        EventTable eventTable = BeanUtils.getBean(EventTable.class);
         Event event = new Event();
         event.setId(resultSet.getLong(eventTable.idColumn));
         event.setEstablishTime(resultSet.getTimestamp(eventTable.establishTimeColumn));

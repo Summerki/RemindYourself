@@ -18,4 +18,13 @@ public class UserSQL {
      */
     @Value("${sql.getUserByUsernameAndPassword}")
     public String getUserByUsernameAndPasswordSQL;
+
+    @Value("${sql.getUserByUsername}")
+    public String getUserByUsername;
+
+    @Value("${sql.getUserByEmail}")
+    public String getUserByEmail;
+
+    @Value("${sql.saveUser}")
+    public String saveUser;
 }

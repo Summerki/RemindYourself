@@ -9,4 +9,9 @@ public interface UserService {
 
     User checkUser(String username, String password);
 
+    boolean checkUsername(String username);
+
+    boolean checkEmail(String email);
+
+    int saveUser(String username, String password, String email);
 }

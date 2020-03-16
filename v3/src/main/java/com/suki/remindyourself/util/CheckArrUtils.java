@@ -1,6 +1,6 @@
 package com.suki.remindyourself.util;
 
-public class CheckArr {
+public class CheckArrUtils {
     /**
      * 判断arr里面所有元素是否等于target
      * @param arr

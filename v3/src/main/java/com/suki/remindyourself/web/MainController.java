@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.suki.remindyourself.po.Event;
 import com.suki.remindyourself.po.User;
 import com.suki.remindyourself.service.EventService;
-import com.suki.remindyourself.util.CheckArr;
+import com.suki.remindyourself.util.CheckArrUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -101,7 +101,7 @@ public class MainController {
         // 如果执行成功这个数组里面应该都是1
         int[] res = eventService.updateEventState(markupJsonArr, Integer.parseInt(u.getId().toString()));
         Map<String, Object> map = new HashMap<>();
-        if (CheckArr.checkArr(res, 1)) { // 判断数组结果是否为全1
+        if (CheckArrUtils.checkArr(res, 1)) { // 判断数组结果是否为全1
             map.put("res", "success");
         } else {
             map.put("res", "fail");
@@ -119,7 +119,7 @@ public class MainController {
         int[] res = eventService.removeEvents(deleteJsonArr, Integer.parseInt(u.getId().toString()));
 //        log.info("delete res {}", res);
         Map<String, Object> map = new HashMap<>();
-        if (CheckArr.checkArr(res, 1)) {
+        if (CheckArrUtils.checkArr(res, 1)) {
             map.put("res", "success");
         } else {
             map.put("res", "fail");
@@ -127,4 +127,10 @@ public class MainController {
         return map;
     }
 
+
+    @RequestMapping("/index")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "index";
+    }
 }

@@ -1,6 +1,6 @@
 package com.suki.remindyourself.po;
 
-import com.suki.remindyourself.util.BeanUtil;
+import com.suki.remindyourself.util.BeanUtils;
 import com.suki.remindyourself.vo.table.UserTable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +27,7 @@ public class User implements RowMapper<User> {
 
     @Override
     public User mapRow(ResultSet resultSet, int i) throws SQLException {
-        UserTable userTable = BeanUtil.getBean(UserTable.class);
+        UserTable userTable = BeanUtils.getBean(UserTable.class);
 
         User user = new User();
         user.setId(resultSet.getLong(userTable.idColumn));

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * 参考：https://www.cnblogs.com/biaogejiushibiao/p/10061466.html
  */
 @Component
-public class BeanUtil implements ApplicationContextAware { // 必须继承ApplicationContextAware接口
+public class BeanUtils implements ApplicationContextAware { // 必须继承ApplicationContextAware接口
 
     private static  ApplicationContext applicationContext = null;
 

@@ -79,53 +79,59 @@
 <script src="../static/js/semantic.min.js" th:src="@{/js/semantic.min.js}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        // 表单提交到服务器的ajax请求函数
+
+        // 所有验证都通过后，表单提交到服务器的ajax请求函数
+        // json格式：{username:xx, password:xx, email:xx}
         function ajaxValidate(value) {
+            var defer = $.Deferred();
+            // console.log(value);
             $.ajax({
-                url: 'remindYouself/login',
+                url: 'addNewUser',
                 type: 'post',
                 data: value,
                 dataType: 'json', // 如果后端传回来的是json数据,必须指定dataType
                 success: function (data) {
-
+                    defer.resolve(data);
                 },
                 error: function (data) {
 
                 }
             });
+            return defer.promise();
         };
 
         // 自定义semantic表单校验规则1:ajax请求验证用户名是否已经被别人注册了
-        $.fn.form.settings.rules.ajaxUniqueUsername = function(value) {
+        // false代表验证没通过，意思就是该值已经被注册了！！！
+        // 所以后台有这个value值时应该返回false，不存在这个value值返回true!!!(这个逻辑我总是搞反……)
+        // 这里只能用同步请求，我试了一下
+        $.fn.form.settings.rules.ajaxUniqueUsername = function(value) { // 这里value就是你输入的值
             var valid = false;
 
             $.ajax({
-               url: '/remindYourself/ajaxUniqueUsername',
-               type: 'post',
-               data: value,
-               dataType: 'json',
-               async: 'true',
-               success: function (data) {
-                   valid = data.result;
-               }
+                url: '/remindYourself/checkUsername',
+                type: 'post',
+                data: {username: value},
+                dataType: 'json',
+                async: false
+            }).done(function (result) {
+                valid = result.result;
             });
 
             return valid;
         };
 
-        // 自定义semantic表单校验规则2:ajax请求验证邮箱是否已经被别人注册了
+        // 自定义semantic表单校验规则2:ajax请求验证邮箱是否已经被别人注册了（方法同上）
         $.fn.form.settings.rules.ajaxUniqueEmail = function(value) {
             var valid = false;
 
             $.ajax({
-                url: '/remindYourself/ajaxUniqueEmail',
+                url: '/remindYourself/checkEmail',
                 type: 'post',
-                data: value,
+                data: {email: value},
                 dataType: 'json',
-                async: 'true',
-                success: function (data) {
-                    valid = data.reset;
-                }
+                async: false
+            }).done(function (result) {
+                valid = result.result;
             });
 
             return valid;
@@ -143,7 +149,10 @@
             onSuccess: function (event, fields) { // 表单验证通过后调用onSuccess函数
                 event.preventDefault(); // 使用ajax提交,防止表单自动提交
                 // fields里面包含了所有的表单数据;如{username: 'suki', password: '123'}
-                ajaxValidate(fields);
+                $.when(ajaxValidate(fields)).done(function (result) {
+                    console.log(result);
+                    // TODO 成功新增用户后还要做的事情
+                })
             }
         });
     });

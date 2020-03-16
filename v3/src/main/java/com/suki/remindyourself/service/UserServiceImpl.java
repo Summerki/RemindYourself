@@ -19,4 +19,20 @@ public class UserServiceImpl implements UserService {
         User user = userDao.getUserByUsernameAndPassword(username, password);
         return user;
     }
+
+    @Override
+    public boolean checkUsername(String username) {
+        return userDao.getUserByUsername(username);
+    }
+
+    @Override
+    public boolean checkEmail(String email) {
+        return userDao.getUserByEmail(email);
+    }
+
+    @Override
+    public int saveUser(String username, String password, String email) {
+        int res = userDao.saveUser(username, password, email);
+        return res;
+    }
 }
