@@ -320,18 +320,20 @@
 
         // [标记为已完成]按钮的ajax请求
         function ajaxMarkup(markupJsonArr) {
+            var defer = $.Deferred();
             $.ajax({
                 url: '/remindYourself/markup',
                 type: 'post',
                 data: {markupJsonArr: JSON.stringify(markupJsonArr)},
                 dataType: 'json', // 如果后端传回来的是json数据,必须指定dataType
                 success: function (data) {
-                    console.log(data);
+                    defer.resolve(data);
                 },
                 error: function (data) {
 
                 }
             });
+            return defer.promise();
         }
 
         // [标记为已完成]按钮点击事件
@@ -351,8 +353,19 @@
                 markupJsonArr.push(markupJson);
             });
             console.log(markupJsonArr);
-            ajaxMarkup(markupJsonArr);
+            $.when(ajaxMarkup(markupJsonArr)).done(function (result) {
+                console.log(result);
+                if (result.res == 'success') { // 批量修改成功
+                    // 将界面上选中的那些元素状态改为[已完成] // 记得要把tr的class由positive改为negative
+                    $.each($('input[type="checkbox"]:checked'), function (index, value) {
+                        $(value).parent().parent().removeClass('positive').addClass('negative');
+                        $(value).parent().parent().find('.my-tbody-state').text('已完成');
+                    });
+                }
+            });
         });
+
+        
     });
 
 

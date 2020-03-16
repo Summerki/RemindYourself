@@ -48,6 +48,18 @@ public class EventDao {
             throw new MySQLException("新增数据异常");
         }
     }
+
+    @Transactional(rollbackFor = MySQLException.class)
+    public int[] updateEventState(List<Object[]> sqlArgList) {
+        try {
+            String sql = eventSQL.updateEventState;
+            daoAspect.showSQLInfo(sql, sqlArgList);
+            int[] res = jdbcTemplate.batchUpdate(sql, sqlArgList);
+            return res;
+        } catch (Exception e) {
+            throw new MySQLException("批量更新出错");
+        }
+    }
 }
 
 

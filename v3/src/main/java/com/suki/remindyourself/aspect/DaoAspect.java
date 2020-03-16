@@ -7,6 +7,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Dao层操作的切面：记录每次每个函数操作数据库的执行时间
  */
@@ -42,5 +44,14 @@ public class DaoAspect {
      */
     public void showSQLInfo(String sql, Object[] args) {
         log.info("执行的sql语句:{},执行的sql语句的参数为:{}", sql, args);
+    }
+
+    /**
+     * 辅助函数
+     * @param sql
+     * @param sqlArgList
+     */
+    public void showSQLInfo(String sql, List<Object[]> sqlArgList) {
+        log.info("执行的sql语句:{},执行的sql语句的参数为:{}", sql, sqlArgList);
     }
 }

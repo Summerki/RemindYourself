@@ -1,10 +1,10 @@
 package com.suki.remindyourself.web;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.suki.remindyourself.po.Event;
 import com.suki.remindyourself.po.User;
 import com.suki.remindyourself.service.EventService;
+import com.suki.remindyourself.util.CheckArr;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -85,20 +85,29 @@ public class MainController {
      *          ...
      *     ]
      * }
+     *
+     * 返回json格式：
+     * {
+     *     res:'success'/'fail'
+     * }
      * @return
      */
     @RequestMapping("/markup")
     @ResponseBody
-    public String markup(@RequestParam("markupJsonArr") String markupStr) {
+    public Map<String, Object> markup(@RequestParam("markupJsonArr") String markupStr, HttpSession session) {
         log.info("markupJsonArr = {}",markupStr);
         JSONArray markupJsonArr = (JSONArray) JSONArray.parse(markupStr);
-
-        JSONObject jsonObject;
-        for (int i = 0; i < markupJsonArr.size(); i++) {
-            jsonObject = (JSONObject) markupJsonArr.get(i);
-            // TODO 这里拿到每个jsonobject后就可以batchupdate了
+        User u =  (User) session.getAttribute("user");
+        // 如果执行成功这个数组里面应该都是1
+        int[] res = eventService.updateEventState(markupJsonArr, Integer.parseInt(u.getId().toString()));
+        log.info("res {}", res);
+        Map<String, Object> map = new HashMap<>();
+        if (CheckArr.checkArr(res, 1)) { // 判断数组结果是否为全1
+            map.put("res", "success");
+        } else {
+            map.put("res", "fail");
         }
-        return "success";
+        return map;
     }
 
 }

@@ -16,4 +16,7 @@ public class EventSQL {
     @Value("${sql.saveEvent}")
     public String saveEventSQL;
 
+    @Value("${sql.updateEventState}")
+    public String updateEventState;
+
 }
