@@ -63,6 +63,10 @@
 
                     <div class="ui error message"></div>
 
+                    <!--验证成功并且成功将数据存入云端的div-->
+                    <div class="ui my-success-msg">
+                        <!--<p>提醒事项创建完成</p>-->
+                    </div>
                 </form>
 
                 <!--<div class="ui message">-->
@@ -137,6 +141,22 @@
             return valid;
         };
 
+        // 辅助函数，提示用户创建成功
+        function showSuccessInfo(info) {
+            // 向.my-success-msg这个div上加上success类
+            $('.my-success-msg').addClass('message').addClass('success');
+            // 在里面加入提示信息
+            $('.my-success-msg').html(info);
+            // 向ui、form上加上success类
+            $('.ui.large.form').addClass('success');
+            // 3秒后清除上面加的东西
+            setTimeout(function () {
+                $('.ui.large.form').removeClass('success');
+                $('.my-success-msg').empty();
+                $('.my-success-msg').removeClass('success').removeClass('message');
+                window.location.href = '/remindYourself/login'; // 创建完用户后跳转到login.html页面
+            }, 3000);
+        }
 
         // 注:semantic-ui的表单验证关于正则表达式必须放在/[正则表达式放在这里]/i
         $('.ui.form').form({
@@ -151,8 +171,10 @@
                 // fields里面包含了所有的表单数据;如{username: 'suki', password: '123'}
                 $.when(ajaxValidate(fields)).done(function (result) {
                     console.log(result);
-                    // TODO 成功新增用户后还要做的事情
-                })
+                    if (result.result == 'success') { // 成功插入用户后
+                        showSuccessInfo('<p>用户创建成功!</p>');
+                    }
+                });
             }
         });
     });

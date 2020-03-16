@@ -58,7 +58,14 @@ public class RegisterController {
         return map;
     }
 
-
+    /**
+     * 前端传来的json格式：{username:xx, password:xx, email:xx}
+     * 返回格式：{result: ''success'/'fail'}
+     * @param username
+     * @param password
+     * @param email
+     * @return
+     */
     @RequestMapping("/addNewUser")
     @ResponseBody
     public Map<String, Object> addNewUser(@RequestParam("username")String username,

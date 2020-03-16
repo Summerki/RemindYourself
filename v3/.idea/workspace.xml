@@ -33,8 +33,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/java/com/suki/remindyourself/web/RegisterController.java">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="70">
-                  <caret line="72" column="38" lean-forward="true" selection-start-line="72" selection-start-column="38" selection-end-line="72" selection-end-column="38" />
+                <state relative-caret-position="-181">
+                  <caret line="63" selection-start-line="63" selection-end-line="63" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -55,7 +55,7 @@
             <entry file="file://$PROJECT_DIR$/src/main/java/com/suki/remindyourself/vo/sql/UserSQL.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="149">
-                  <caret line="27" column="29" lean-forward="true" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
+                  <caret line="27" column="29" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
                   <folding>
                     <element signature="imports" expanded="true" />
                     <element signature="e#636#659#1" expanded="true" />
@@ -69,7 +69,7 @@
             <entry file="file://$PROJECT_DIR$/src/main/java/com/suki/remindyourself/dao/UserDao.java">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="265">
-                  <caret line="81" column="5" lean-forward="true" selection-start-line="81" selection-start-column="5" selection-end-line="81" selection-end-column="5" />
+                  <caret line="81" column="5" selection-start-line="81" selection-start-column="5" selection-end-line="81" selection-end-column="5" />
                   <folding>
                     <element signature="imports" expanded="true" />
                   </folding>
@@ -109,8 +109,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main/resources/templates/main.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="319">
-                  <caret line="385" column="14" lean-forward="true" selection-start-line="385" selection-start-column="14" selection-end-line="385" selection-end-column="14" />
+                <state relative-caret-position="250">
+                  <caret line="180" column="9" lean-forward="true" selection-start-line="167" selection-start-column="8" selection-end-line="180" selection-end-column="9" />
                   <folding>
                     <element signature="e#2052#2058#0" expanded="true" />
                   </folding>
@@ -121,8 +121,17 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/main/resources/templates/register.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="194">
-                  <caret line="153" column="41" selection-start-line="153" selection-start-column="41" selection-end-line="153" selection-end-column="41" />
+                <state relative-caret-position="177">
+                  <caret line="156" column="88" selection-start-line="156" selection-start-column="88" selection-end-line="156" selection-end-column="88" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/main/resources/templates/index.html">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="272">
+                  <caret line="72" column="70" selection-start-line="72" selection-start-column="65" selection-end-line="72" selection-end-column="70" />
                 </state>
               </provider>
             </entry>
@@ -439,11 +448,11 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1584348140459" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1584349021145" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../v2" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -500,12 +509,12 @@
       <workItem from="1583907808084" duration="4900000" />
       <workItem from="1583977896878" duration="5078000" />
       <workItem from="1584253909172" duration="15484000" />
-      <workItem from="1584322431834" duration="17016000" />
+      <workItem from="1584322431834" duration="17885000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="176907000" />
+    <option name="totallyTimeSpent" value="177776000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -521,7 +530,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.4348442" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.33994335" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.5184136" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -811,13 +820,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="60" column="94" selection-start-line="60" selection-start-column="94" selection-end-line="60" selection-end-column="94" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/suki/remindyourself/web/TestController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="48">
@@ -934,16 +936,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/main.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="385" column="14" lean-forward="true" selection-start-line="385" selection-start-column="14" selection-end-line="385" selection-end-column="14" />
-          <folding>
-            <element signature="e#2052#2058#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/config/userSql.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -954,7 +946,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/suki/remindyourself/vo/sql/UserSQL.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="149">
-          <caret line="27" column="29" lean-forward="true" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
+          <caret line="27" column="29" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#636#659#1" expanded="true" />
@@ -987,7 +979,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/suki/remindyourself/dao/UserDao.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="265">
-          <caret line="81" column="5" lean-forward="true" selection-start-line="81" selection-start-column="5" selection-end-line="81" selection-end-column="5" />
+          <caret line="81" column="5" selection-start-line="81" selection-start-column="5" selection-end-line="81" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -996,18 +988,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/suki/remindyourself/web/RegisterController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="70">
-          <caret line="72" column="38" lean-forward="true" selection-start-line="72" selection-start-column="38" selection-end-line="72" selection-end-column="38" />
+        <state relative-caret-position="-181">
+          <caret line="63" selection-start-line="63" selection-end-line="63" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/main.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="180" column="9" lean-forward="true" selection-start-line="167" selection-start-column="8" selection-end-line="180" selection-end-column="9" />
+          <folding>
+            <element signature="e#2052#2058#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="72" column="70" selection-start-line="72" selection-start-column="65" selection-end-line="72" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/templates/register.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="153" column="41" selection-start-line="153" selection-start-column="41" selection-end-line="153" selection-end-column="41" />
+        <state relative-caret-position="177">
+          <caret line="156" column="88" selection-start-line="156" selection-start-column="88" selection-end-line="156" selection-end-column="88" />
         </state>
       </provider>
     </entry>
