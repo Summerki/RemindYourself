@@ -67,5 +67,20 @@ public class EventServiceImpl implements EventService {
         return res;
     }
 
+    @Override
+    public Event getEvent(String establishTime, String remindTime, String content) {
+        return eventDao.getEvent(establishTime, remindTime, content);
+    }
+
+    @Override
+    public List<Event> getUnfinishStateEVents(List<Object[]> unfinishStateList) {
+        return eventDao.listUnfinishStateEvents(unfinishStateList);
+    }
+
+    @Override
+    public int updateEventStateTo1(String establishTime, String remindTime, String content) {
+        return eventDao.updateEventStateTo1(establishTime, remindTime, content);
+    }
+
 
 }

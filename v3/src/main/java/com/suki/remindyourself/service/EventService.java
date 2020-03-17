@@ -18,4 +18,12 @@ public interface EventService {
     int[] updateEventState(JSONArray jsonArray, Integer forUserId);
 
     int[] removeEvents(JSONArray deleteJsonArr, int forUserId);
+
+    Event getEvent(String establishTime, String remindTime, String content);
+
+    List<Event> getUnfinishStateEVents(List<Object[]> unfinishStateList);
+
+    int updateEventStateTo1(String establishTime, String remindTime, String content);
+
+
 }

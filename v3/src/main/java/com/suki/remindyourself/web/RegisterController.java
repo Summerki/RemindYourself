@@ -1,5 +1,6 @@
 package com.suki.remindyourself.web;
 
+import com.suki.remindyourself.service.EventService;
 import com.suki.remindyourself.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class RegisterController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    EventService eventService;
 
     /**
      * 接收前端传来的格式：{username: xx}
@@ -76,6 +80,9 @@ public class RegisterController {
         Map<String, Object> map = new HashMap<>();
         if (res == 1) {
             map.put("result", "success");
+            // 下面这行是我为了偷懒不想做后端某些校验了，以后想细化可以删除这句话……
+            eventService.saveEvent("2020-01-01 12:00:00", "2020-01-01 12:00:00", "格式示例", 1,
+                                    Integer.parseInt(userService.checkUser(username, password).getId().toString()));
         } else {
             map.put("result", "fail");
         }
